@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,12 @@ use Illuminate\Support\Facades\Route;
 //returns home page
 Route::get('/', [HomeController::class, 'index']) -> name('home');
 
+
+//returns registration page
+Route::get('/account/register', [AccountController::class, 'registration']) -> name('account.registration');
+//handles registration data
+Route::post('/account/process-register', [AccountController::class, 'processRegistration']) -> name('account.processRegistration');
+
+//returns login page
+Route::get('/account/login', [AccountController::class, 'login']) -> name('account.login');
+//
