@@ -5,16 +5,9 @@
 <section class="section-5">
     <div class="container my-5">
         <div class="py-lg-2">&nbsp;</div>
-        @if (session() -> has ('success'))
-            <div class="alert alert-success"> 
-                <p class="mb-0  pb-0"> {{session('success')}} </p>
-            </div>
-        @endif
-        @if (session() -> has ('loginerror'))
-            <div class="alert alert-danger"> 
-                <p class="mb-0  pb-0"> {{session('loginerror')}} </p>
-            </div>
-        @endif
+
+        @include('front.message')
+
         <div class="row d-flex justify-content-center">
             <div class="col-md-5">
                 <div class="card shadow border-0 p-5">

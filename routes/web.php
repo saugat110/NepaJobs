@@ -69,8 +69,14 @@ Route::prefix('/account')->group(function () {
         //return user profile page
         Route::get('/profile', [AccountController::class, 'profile'])->name('account.profile');
 
+        //update user profile
+        Route::put('/profile/update', [AccountController::class, 'updateProfile']) ->name('account.updateProfile');
+
         //logout user and redirect to login page
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
+
+        //
+        
     });
 
 });
