@@ -35,7 +35,7 @@
 
                 </div>
                 <div class="mt-4 text-center">
-                    <p>Have an account? <a  href="login.html">Login</a></p>
+                    <p>Have an account? <a  href="{{route('account.login')}}">Login</a></p>
                 </div>
             </div>
         </div>
@@ -44,6 +44,8 @@
 @endsection
 
 @section('customJs')
+
+{{-- ajax --}}
 <script>
     $('#registrationForm').submit(function(e){
         e.preventDefault();
