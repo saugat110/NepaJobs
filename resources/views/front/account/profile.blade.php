@@ -25,7 +25,8 @@
 
                 {{-- update personal info --}}
                 <div class="col-lg-9">
-                    @include('front.message')
+                    {{-- for sucess error alert messages --}}
+                        @include('front.message')
                     <div class="card border-0 shadow mb-4">
                         <form action="" id="updateProfileForm" name="updateProfileForm">
                             <div class="card-body  p-4">
@@ -97,6 +98,7 @@
 
 @section('customJs')
     <script>
+        //personal info update
         $('#updateProfileForm').submit(function(e) {
             e.preventDefault();
 

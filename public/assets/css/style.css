@@ -4948,7 +4948,9 @@ textarea.form-control-lg {
 }
 .bg-dark {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-dark-rgb)) !important;
+  /* background-color: rgba(var(--bs-dark-rgb)) !important; */
+  /* background-color: #B0B7FC !important; */
+  background-color:   #8F99FB !important;
 }
 .bg-black {
   --bs-bg-opacity: 1;

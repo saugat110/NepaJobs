@@ -3,7 +3,9 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,17 +71,25 @@ Route::prefix('/account')->group(function () {
         //return user profile page
         Route::get('/profile', [AccountController::class, 'profile'])->name('account.profile');
 
-        //update user profile
+        //update user profile info
         Route::put('/profile/update', [AccountController::class, 'updateProfile']) ->name('account.updateProfile');
+
+        //update profile picture
+        Route::post('/profile/updatePic', [AccountController::class, 'updateProfilePic']) -> name('account.updateProfilePic');
 
         //logout user and redirect to login page
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
-
-        //
-        
     });
 
 });
+
+
+Route::get('/test',function(){
+    echo public_path('profilepic');
+});
+
+
+
 
 
 

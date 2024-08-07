@@ -52,7 +52,7 @@
 
 
 
-
+{{-- update profile picture form --}}
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -60,19 +60,20 @@
         <h5 class="modal-title pb-0" id="exampleModalLabel">Change Profile Picture</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+ 
       <div class="modal-body">
-        <form>
+        <form id="profilePicForm" name="profilePicForm" enctype="multipart/form-data" action="">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Profile Image</label>
-                <input type="file" class="form-control" id="image"  name="image">
+                <input type="file" class="form-control" id="image"  name="image" accept="image/*" required>
             </div>
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary mx-3">Update</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
-            
         </form>
       </div>
+
     </div>
   </div>
 </div>
@@ -94,6 +95,26 @@
 		headers:{
 			'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
 		}
+	});
+ 
+	// to update profile picture
+	$('#profilePicForm').submit(function(e){
+		e.preventDefault();
+
+		var formData = new FormData(this);
+		$.ajax({
+			url:"{{ route('account.updateProfilePic') }}",
+			type: 'post',
+			dataType: 'json',
+			contentType: false,
+			processData: false,
+			data: formData,
+			success:function(response){
+				if(response.status == true){
+					window.location.href = "{{ route('account.profile') }}";
+				}
+			}
+		});
 	});
 </script>
 

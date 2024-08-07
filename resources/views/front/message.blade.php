@@ -16,4 +16,10 @@
     </div>
 @endif
 
+@if (session()->has('pp_updated'))
+    <div class="alert alert-success" role="alert">
+        {{ session('pp_updated') }}
+    </div>
+@endif
+
 
