@@ -34,4 +34,18 @@
     </div>
 @endif
 
+@if (session()->has('jobdeleted'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobdeleted') }}
+    </div>
+@endif
+
+@if (session()->has('jobnotdeleted'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('jobnotdeleted') }}
+    </div>
+@endif
+
+
+
 

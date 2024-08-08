@@ -92,6 +92,9 @@ Route::prefix('/account')->group(function () {
         //process edit job form data
         Route::put('/process-editJob/{job_id}', [AccountController::class,'processEditJob']) -> name('account.processEditJob');
 
+        //delete job, ajax, redirect to myjobs page
+        Route::post('/delete-job', [AccountController::class, 'deleteJob']) ->name('account.deleteJob');
+
         //logout user and redirect to login page
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     });

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
-
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class AccountController extends Controller
 {
@@ -307,6 +307,25 @@ class AccountController extends Controller
                     ]);
         }
     }
+
+    //delete job and redirect to myjobs page
+    public function deleteJob(Request $request){
+        $job_id = $request -> job_id;
+        $job = Job::where([
+            'id' => $job_id,
+            'user_id' => Auth::id()
+        ]) -> first();
+
+        if($job == null){
+            session() -> flash('jobnotdeleted', "Job Not Found.");
+            return response() -> json(['status' => false]);
+        }else{
+            $job -> delete();
+            session() -> flash('jobdeleted', "Job Deleted Successfully.");
+            return response() -> json(['status' => true]);
+        }
+    }
+
     
     //logout user and redirect to login page
     public function logout(){
