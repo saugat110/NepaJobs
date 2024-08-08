@@ -77,6 +77,15 @@ Route::prefix('/account')->group(function () {
         //update profile picture
         Route::post('/profile/updatePic', [AccountController::class, 'updateProfilePic']) -> name('account.updateProfilePic');
 
+        //return create job page
+        Route::get('/create-job', [AccountController::class, 'createJobs']) -> name('account.createJob');
+
+        //process form of create-job page
+        Route::post('/process-createJob', [AccountController::class, 'processCreateJobs']) -> name('account.processCreateJob');
+
+        //return myjobs page
+        Route::get('/my-jobs', [AccountController::class, 'myJobs']) -> name('account.myJobs');
+
         //logout user and redirect to login page
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     });
