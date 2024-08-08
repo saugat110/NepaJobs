@@ -86,6 +86,12 @@ Route::prefix('/account')->group(function () {
         //return myjobs page
         Route::get('/my-jobs', [AccountController::class, 'myJobs']) -> name('account.myJobs');
 
+        //return edit jobs page
+        Route::get('/my-jobs/edit/{job_id}', [AccountController::class, 'editJob']) -> name('account.editJob');
+
+        //process edit job form data
+        Route::put('/process-editJob/{job_id}', [AccountController::class,'processEditJob']) -> name('account.processEditJob');
+
         //logout user and redirect to login page
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     });

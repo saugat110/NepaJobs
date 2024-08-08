@@ -177,7 +177,7 @@ class AccountController extends Controller
         ->with(compact('categories', 'jobtypes'));
     }
 
-    //process create jobs form
+    //process create jobs form, save data
     public function processCreateJobs(Request $request){
         $rules = [
             'title' => 'required|min:5|max:60',
@@ -229,11 +229,83 @@ class AccountController extends Controller
 
     //return myjobs page
     public function myJobs(){
-        $myjobs = Job::where('user_id', Auth::id()) ->with('jobType')-> paginate(5);
+        $myjobs = Job::where('user_id', Auth::id()) ->with('jobType')-> orderBy('id','desc')->paginate(5);
         // dd($myjobs);
         return view('front.account.job.my-jobs',[
             'myjobs' => $myjobs
         ]);
+    }
+
+    //return edit jobs page
+    public function editJob(Request $request, $job_id){
+        $categories = Category::orderBy('name', 'ASC') -> where('status', 1) -> get();
+        $jobtypes = JobType::orderBy('name', 'ASC') -> where('status', 1) -> get();
+
+        // dd($job_id);
+        $job = Job::where([
+            'id' => $job_id,
+            'user_id' => Auth::id()
+        ]) -> first();
+
+        //maile mero job ma edit garna milnu paryo
+        if($job == null){
+            abort(404);
+        }
+
+        return view('front.account.job.editjob',[
+            'categories' => $categories,
+            'jobtypes' => $jobtypes,
+            'job' => $job
+        ]);
+    }
+
+    //process edit job data, save data
+    public function processEditJob(Request $request, $job_id){
+        $rules = [
+            'title' => 'required|min:5|max:60',
+            'category' => 'required',
+            'jobType' => 'required',
+            'vacancy' => 'required',
+            'location' => 'required|max:50',
+            'description' => 'required',
+            'company_name' => 'required|min:5|max:50',
+            'experience' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if($validator -> passes()){
+            $job = Job::find($job_id);
+            $job->title  = $request -> title;
+            $job->category_id  = $request -> category;
+            $job->job_type_id  = $request -> jobType;
+            // $job->user_id  = Auth::id();
+            $job->vacancy  = $request -> vacancy;
+            $job->salary  = $request -> salary;
+            $job->location  = $request -> location;
+            $job->description  = $request -> description;
+            $job->benefits  = $request -> benefits;
+            $job->responsilibity  = $request -> responsibility;
+            $job->qualifications  = $request -> qualifications;
+            $job->keywords  = $request -> keywords;
+            $job->experience  = $request -> experience;
+            $job->company_name  = $request -> company_name;
+            $job->company_location  = $request -> company_location;
+            $job->company_website  = $request -> company_website;
+            $job->save();
+            session() -> flash('jobUpdated', 'Job Updated Successfully.');
+
+            return response() 
+                    -> json([
+                        'status' => true,
+                        'errors' => []
+                    ]);
+        }else{
+            return response()
+                    -> json([
+                        'status' => false,
+                        'errors' => $validator->errors()
+                    ]);
+        }
     }
     
     //logout user and redirect to login page

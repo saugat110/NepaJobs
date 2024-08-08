@@ -28,4 +28,10 @@
     </div>
 @endif
 
+@if (session()->has('jobUpdated'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobUpdated') }}
+    </div>
+@endif
+
 
