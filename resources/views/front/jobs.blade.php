@@ -22,8 +22,8 @@
                     <form action="" name="searchForm" id="searchForm">
                         <div class="card border-0 shadow p-4">
                             <div class="mb-4">
-                                <h2>Keywords</h2>
-                                <input type="text" value="{{ Request::get('keyword') }}" placeholder="Keywords" name="keyword" id="keyword" class="form-control">
+                                <h2>Keyword</h2>
+                                <input type="text" value="{{ Request::get('keyword') }}" placeholder="Keyword" name="keyword" id="keyword" class="form-control">
                             </div>
 
                             <div class="mb-4">
@@ -118,7 +118,7 @@
                                                     </div>
 
                                                     <div class="d-grid mt-3">
-                                                        <a href="job-detail.html" class="btn btn-primary btn-lg">Details</a>
+                                                        <a href="{{ route('jobDetail', ['jobid' => $job->id]) }}" class="btn btn-primary btn-lg">Details</a>
                                                     </div>
                                                 </div>
                                             </div>

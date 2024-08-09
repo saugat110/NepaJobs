@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobsController;
+use Barryvdh\Debugbar\DataCollector\JobsCollector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //returns jobs page, find jobs
 Route::get('/jobs', [JobsController::class, 'index']) -> name('jobs');
+
+//return job detail page
+Route::get('/jobs/detail/{jobid}', [JobsController::class, 'jobDetail']) -> name('jobDetail');
 
 // Route::get('/routes', function () {
 //     //returns registration page

@@ -18,10 +18,17 @@ class JobsController extends Controller
 
         //search using keyword
         if(!empty($request -> keyword)){
-            $jobs = $jobs -> where(function($query) use ($request){
-                $query -> orWhere('title', 'like', '%' . $request->keyword. '%');
-                $query -> orWhere('keywords', 'like', '%' . $request->keyword. '%');
-            });
+            // $jobs = $jobs -> where(function($query) use ($request){
+            //     $query -> orWhere('title', 'like', '%' . $request->keyword. '%');
+            //     $query -> orWhere('keywords', 'like', '%'.$request->keyword. '%');
+            // });
+            $kword = $request -> keyword;
+            $jobs = $jobs->where(function($query) use ($kword) {
+                $query->where('title', 'like', '%' . $kword . '%');
+                $query->orWhere(function($subQuery) use ($kword) {
+                          $subQuery->whereRaw('FIND_IN_SET(?, keywords) > 0', [$kword]);
+                });
+            });  
         }
 
         //search using location
@@ -62,5 +69,16 @@ class JobsController extends Controller
             'jobs' => $jobs,
             'jobTypeArray' => $jobTypeArray,
         ]);
+    }
+
+    //return job detail page
+    public function jobDetail($jobid){
+        $job = Job::where(['id'=>$jobid, 'status' => 1]) -> first();
+        // dd($job);
+        if($job == null){
+            abort(404);
+        }
+        return view('front.jobDetail',['job' => $job]);
+
     }
 }
