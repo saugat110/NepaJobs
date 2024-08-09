@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JobsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -23,28 +24,36 @@ use Illuminate\Support\Facades\Storage;
 // });
 
 
+//PUBLIC routes
 //returns home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/routes', function () {
-    //returns registration page
-    // Route::get('/account/register', [AccountController::class, 'registration']) -> name('account.registration');
+//returns jobs page, find jobs
+Route::get('/jobs', [JobsController::class, 'index']) -> name('jobs');
 
-    //handles registration data
-    // Route::post('/account/process-register', [AccountController::class, 'processRegistration']) -> name('account.processRegistration');
+// Route::get('/routes', function () {
+//     //returns registration page
+//     // Route::get('/account/register', [AccountController::class, 'registration']) -> name('account.registration');
 
-    //returns login page
-    // Route::get('/account/login', [AccountController::class, 'login']) -> name('account.login');
+//     //handles registration data
+//     // Route::post('/account/process-register', [AccountController::class, 'processRegistration']) -> name('account.processRegistration');
 
-    //handle login data and authenticate user
-    // Route::post('/account/process-login', [AccountController::class, 'processLogin']) -> name('account.processLogin');
+//     //returns login page
+//     // Route::get('/account/login', [AccountController::class, 'login']) -> name('account.login');
 
-    //return user profile page
-    // Route::get('/account/profile', [AccountController::class, 'profile'])->name('account.profile');
+//     //handle login data and authenticate user
+//     // Route::post('/account/process-login', [AccountController::class, 'processLogin']) -> name('account.processLogin');
 
-    //logout user and redirect to login page
-    // Route::get('/account/logout', [AccountController::class, 'logout'])->name('account.logout');
-});
+//     //return user profile page
+//     // Route::get('/account/profile', [AccountController::class, 'profile'])->name('account.profile');
+
+//     //logout user and redirect to login page
+//     // Route::get('/account/logout', [AccountController::class, 'logout'])->name('account.logout');
+// });
+
+
+
+
 
 //routes with prefix account
 Route::prefix('/account')->group(function () {
