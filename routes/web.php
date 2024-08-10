@@ -122,6 +122,9 @@ Route::prefix('/account')->group(function () {
         //unapply job
         Route::post('/job/unapply', [AccountController::class, 'unapplyjob']) ->name('account.jobUnapply');
 
+        //save job
+        Route::post('/job/save', [JobsController::class, 'saveJob'])->name('account.saveJob');
+
         //logout user and redirect to login page
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     });

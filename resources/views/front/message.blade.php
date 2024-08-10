@@ -71,5 +71,21 @@
 @endif
 
 
+@if (session()->has('savejobsuccess'))
+    <div class="alert alert-success" role="alert">
+        {{ session('savejobsuccess') }}
+    </div>
+@endif
+
+@if (session()->has('savejoberror'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('savejoberror') }}
+    </div>
+@endif
+
+
+
+
+
 
 

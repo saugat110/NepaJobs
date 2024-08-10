@@ -9270,8 +9270,8 @@ button.btn-secondary, .btn.btn-secondary {
   border: 2px solid #242021;
 }
 button.btn-secondary:hover, button.btn-secondary:focus, .btn.btn-secondary:hover, .btn.btn-secondary:focus {
-  border: 2px solid #A8DF8E;
-  background: #A8DF8E;
+  border: 2px solid #B0B7FC;
+  background: #B0B7FC;
   color: #ffffff;
 }
 button.btn-outline-primary, .btn.btn-outline-primary {

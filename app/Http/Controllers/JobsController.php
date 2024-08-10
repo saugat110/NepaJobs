@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\JobType;
+use App\Models\SavedJob;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -146,5 +147,30 @@ class JobsController extends Controller
             return response() -> json([
                 'status' => true,
             ]);
+    }
+
+    //save job
+    public function saveJob(Request $request){
+        
+        $count = SavedJob::where([
+            'job_id' => $request->jobid,
+            'user_id' => Auth::id()
+        ]) -> count();
+
+        if($count > 0){
+            session() -> flash('savejoberror', "You already saved this Job.");
+              return response() -> json([
+                'status' => false,
+            ]);
+        }else{
+            $savedjob = new SavedJob();
+            $savedjob -> job_id = $request->jobid;
+            $savedjob -> user_id = Auth::id();
+            $savedjob -> save();
+            session() -> flash('savejobsuccess', "Job Saved Successfully.");
+            return response() -> json([
+                'status' => true,
+            ]);
+        }
     }
 }

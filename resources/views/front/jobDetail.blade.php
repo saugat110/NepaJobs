@@ -7,7 +7,8 @@
                 <div class="col">
                     <nav aria-label="breadcrumb" class=" rounded-3 p-3">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('jobs') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            <li class="breadcrumb-item"><a href="{{ route('jobs') }}"><i class="fa fa-arrow-left"
+                                        aria-hidden="true"></i>
                                     &nbsp;Back to Jobs</a></li>
                         </ol>
                     </nav>
@@ -37,15 +38,17 @@
                                             @if (Auth::id() == $job->user_id)
                                                 <div class="location">
                                                     <p> <i class="fa fa-user-o"></i> Posted by You</p>
-                                             </div>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                                 <div class="jobs_right">
                                     <div class="apply_now">
-                                        <a class="heart_mark" href="#"> <i class="fa fa-heart-o"
-                                                aria-hidden="true"></i></a>
+                                        @if (Auth::check())
+                                            <a class="heart_mark" onclick="saveJob({{ $job->id }})"> <i class="fa fa-heart-o"
+                                            aria-hidden="true"></i></a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -72,13 +75,20 @@
                                     <h4>Benefits</h4>
                                     <p>{{ $job->benefits }}</p>
                                 @endif
-                               
+
                             </div>
                             <div class="border-bottom"></div>
                             <div class="pt-3 text-end">
-                                <a href="#" class="btn btn-secondary">Save</a>
+
                                 @if (Auth::check())
-                                    <a  onclick="applyJob({{ $job->id }})" class="btn btn-primary" id="apply-btn">Apply</a>
+                                    <a onclick="saveJob({{  $job->id }})" class="btn btn-secondary" id="sv-btn">Save</a>
+                                @else
+                                    <a class="btn btn-secondary disabled">Login to Save</a>
+                                @endif
+
+                                @if (Auth::check())
+                                    <a onclick="applyJob({{ $job->id }})" class="btn btn-primary"
+                                        id="apply-btn">Apply</a>
                                 @else
                                     <a href="#" class="btn btn-primary disabled">Login to Apply</a>
                                 @endif
@@ -97,9 +107,12 @@
                             </div>
                             <div class="job_content pt-3">
                                 <ul>
-                                    <li>Published on: <span>{{ \Carbon\Carbon::parse($job->created_at)->format('d M, Y')}}</span></li>
+                                    <li>Published on:
+                                        <span>{{ \Carbon\Carbon::parse($job->created_at)->format('d M, Y') }}</span></li>
                                     <li>Vacancy: <span>{{ $job->vacancy }} Position</span></li>
-                                    @if(!empty($job->salary))<li>Salary: <span>{{ $job->salary }}</span></li>@endif
+                                    @if (!empty($job->salary))
+                                        <li>Salary: <span>{{ $job->salary }}</span></li>
+                                    @endif
                                     <li>Location: <span>{{ $job->location }}</span></li>
                                     <li>Job Nature: <span> {{ $job->jobType->name }}</span></li>
                                 </ul>
@@ -114,8 +127,13 @@
                             <div class="job_content pt-3">
                                 <ul>
                                     <li>Name: <span>{{ $job->company_name }}</span></li>
-                                    @if(!empty($job->company_location))<li>Location: <span>{{ $job->company_location }}</span></li>@endif
-                                    @if(!empty($job->company_website))<li>Website: <span><a href="{{ $job->company_website }}" target="_blank">{{ $job->company_website }}</a></span></li>@endif
+                                    @if (!empty($job->company_location))
+                                        <li>Location: <span>{{ $job->company_location }}</span></li>
+                                    @endif
+                                    @if (!empty($job->company_website))
+                                        <li>Website: <span><a href="{{ $job->company_website }}"
+                                                    target="_blank">{{ $job->company_website }}</a></span></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -127,23 +145,45 @@
 @endsection
 
 @section('customJs')
-<script>
-    function applyJob(jobid){
-        if(confirm("Are u sure u want to apply?")){
-            var applyButton = document.getElementById('apply-btn');
-            applyButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Applying...`;
-            applyButton.disabled = true;
+    <script>
+        function applyJob(jobid) {
+            if (confirm("Are u sure u want to apply?")) {
+                var applyButton = document.getElementById('apply-btn');
+                applyButton.innerHTML =
+                    `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Applying...`;
+                applyButton.disabled = true;
 
-            $.ajax({
-                url: '{{ route('jobApply') }}',
-                type: 'POST',
-                data: {jobid: jobid},
-                dataType: 'json',
-                success: function(response){
-                    window.location.href = "{{ url() -> current() }}";
-                }
-            });
+                $.ajax({
+                    url: '{{ route('jobApply') }}',
+                    type: 'POST',
+                    data: {
+                        jobid: jobid
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        window.location.href = "{{ url()->current() }}";
+                    }
+                });
+            }
         }
-    }
-</script>
+
+        function saveJob(jobid) {
+                var svButton = document.getElementById('sv-btn');
+                svButton.innerHTML =
+                    `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...`;
+                svButton.disabled = true;
+
+                $.ajax({
+                    url: '{{ route("account.saveJob") }}',
+                    type: 'POST',
+                    data: {
+                        jobid: jobid
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        window.location.href = "{{ url()->current() }}";
+                    }
+                });
+        }
+    </script>
 @endsection
