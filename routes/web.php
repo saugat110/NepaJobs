@@ -125,6 +125,12 @@ Route::prefix('/account')->group(function () {
         //save job
         Route::post('/job/save', [JobsController::class, 'saveJob'])->name('account.saveJob');
 
+        //return saved jobs page
+        Route::get('/saved-jobs', [AccountController::class, 'savedJobs']) -> name('account.savedJobs');
+
+        //unsave job
+        Route::post('/job/unsave', [AccountController::class, 'unSave']) ->name('account.jobunSave');
+
         //logout user and redirect to login page
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     });

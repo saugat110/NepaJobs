@@ -83,6 +83,12 @@
     </div>
 @endif
 
+@if (session()->has('jobunsavesuccess'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobunsavesuccess') }}
+    </div>
+@endif
+
 
 
 
