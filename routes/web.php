@@ -116,6 +116,12 @@ Route::prefix('/account')->group(function () {
         //delete job, ajax, redirect to myjobs page
         Route::post('/delete-job', [AccountController::class, 'deleteJob']) ->name('account.deleteJob');
 
+        //view my applied jobs page
+        Route::get('/my-applied-jobs', [AccountController::class, 'myappliedjobs']) -> name('account.jobsApplied');
+
+        //unapply job
+        Route::post('/job/unapply', [AccountController::class, 'unapplyjob']) ->name('account.jobUnapply');
+
         //logout user and redirect to login page
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     });

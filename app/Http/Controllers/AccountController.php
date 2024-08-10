@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\JobType;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -327,6 +328,26 @@ class AccountController extends Controller
         }
     }
 
+    //view myapplied jobs page
+    public function myappliedjobs(){
+        $jobapps = JobApplication::where('user_id', Auth::id()) ->with('job')-> paginate(4);
+        
+        return view('front.account.job.myapplied-jobs',[
+            'jobapps' => $jobapps
+        ]);
+    }
+
+    //unapply job
+    public function unapplyjob(Request $request){
+        $jobapplied = JobApplication::where([
+            'id' => $request->jobapp_id,
+            'user_id' => Auth::id()
+        ]);
+
+        $jobapplied -> delete();
+        session() -> flash('jobunapplysuccess', "Job Application Withdrawed Successfully.");
+        return response() -> json(['status'=> true]);
+    }
     
     //logout user and redirect to login page
     public function logout(){

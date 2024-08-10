@@ -130,7 +130,12 @@
                             </div>
                         </div>
                     </div>
-                    {{ $jobs->links() }}
+
+                    @if(Request::get('sort'))
+                        {{ $jobs->appends(['sort' => Request::get('sort')])->links() }}
+                    @else
+                        {{ $jobs->links() }}
+                    @endif
                 </div>
 
             </div>
