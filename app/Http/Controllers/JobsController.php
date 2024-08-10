@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\JobType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobsController extends Controller
 {
@@ -79,6 +81,52 @@ class JobsController extends Controller
             abort(404);
         }
         return view('front.jobDetail',['job' => $job]);
+    }
 
+
+    //apply job
+    public function applyJob(Request $request){
+        $jobid = $request->jobid;
+        $userid = Auth::id();
+        $employerid = Job::find($jobid) -> user_id;
+
+        // return response() -> json([
+        //     'jobid' => $jobid,
+        //     'employeeid' => $userid,
+        //     'employerid' => $employerid,
+        // ]);
+
+        //user cant appply on his own job
+        if($userid == $employerid){
+            session() -> flash('applyjoberror', "You can't apply on your own Job.");
+            return response() -> json([
+                'status' => false,
+            ]);
+        }
+
+        //user cant apply twice
+        $alreadyapplied = JobApplication::where([
+            'job_id' => $jobid,
+            'user_id' => $userid,
+        ]) -> count();
+
+        if($alreadyapplied  > 0){
+            session() -> flash('applyjoberror2', "You already applied for this Job.");
+            return response() -> json([
+                'status' => false,
+            ]);
+        }
+
+        $jobapplication = new JobApplication();
+        $jobapplication -> job_id = $jobid;
+        $jobapplication -> user_id = $userid;
+        $jobapplication -> employer_id = $employerid;
+        $jobapplication->applied_date = now();
+        $jobapplication -> save();
+
+         session() -> flash('applyjobsuccess', "Applied for Job Successfully.");
+            return response() -> json([
+                'status' => true,
+            ]);
     }
 }

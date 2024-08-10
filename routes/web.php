@@ -35,6 +35,9 @@ Route::get('/jobs', [JobsController::class, 'index']) -> name('jobs');
 //return job detail page
 Route::get('/jobs/detail/{jobid}', [JobsController::class, 'jobDetail']) -> name('jobDetail');
 
+//apply job
+Route::post('job/apply', [JobsController::class, 'applyJob']) -> name('jobApply');
+
 // Route::get('/routes', function () {
 //     //returns registration page
 //     // Route::get('/account/register', [AccountController::class, 'registration']) -> name('account.registration');

@@ -46,6 +46,24 @@
     </div>
 @endif
 
+@if (session()->has('applyjoberror'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('applyjoberror') }}
+    </div>
+@endif
+
+@if (session()->has('applyjoberror2'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('applyjoberror2') }}
+    </div>
+@endif
+
+@if (session()->has('applyjobsuccess'))
+    <div class="alert alert-success" role="alert">
+        {{ session('applyjobsuccess') }}
+    </div>
+@endif
+
 
 
 
