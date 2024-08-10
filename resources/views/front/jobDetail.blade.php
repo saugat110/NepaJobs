@@ -78,7 +78,7 @@
                             <div class="pt-3 text-end">
                                 <a href="#" class="btn btn-secondary">Save</a>
                                 @if (Auth::check())
-                                    <a  onclick="applyJob({{ $job->id }})" class="btn btn-primary">Apply</a>
+                                    <a  onclick="applyJob({{ $job->id }})" class="btn btn-primary" id="apply-btn">Apply</a>
                                 @else
                                     <a href="#" class="btn btn-primary disabled">Login to Apply</a>
                                 @endif
@@ -130,6 +130,10 @@
 <script>
     function applyJob(jobid){
         if(confirm("Are u sure u want to apply?")){
+            var applyButton = document.getElementById('apply-btn');
+            applyButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Applying...`;
+            applyButton.disabled = true;
+
             $.ajax({
                 url: '{{ route('jobApply') }}',
                 type: 'POST',

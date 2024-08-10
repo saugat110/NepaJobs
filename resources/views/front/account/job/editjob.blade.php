@@ -139,6 +139,15 @@
                                     </select>
                                 </div>
 
+                                {{-- Status --}}
+                                <div class="mb-4 col-12 col-md-6">
+                                    <label for="" class="mb-2">Status</label>
+                                    <select name="status" id="status" class="form-select">
+                                        <option {{ $job->status =='1'?'selected':'' }} value="1">Active</option>
+                                        <option {{ $job->status =='0'?'selected':'' }} value="0">Block</option>
+                                    </select>
+                                </div>
+
                                 <h3 class="fs-4 mb-1 mt-5 border-top pt-5">Company Details</h3>
 
                                 <div class="row">
@@ -163,7 +172,7 @@
                                 </div>
                             </div>
                             <div class="card-footer  p-4">
-                                <input type="submit" class="btn btn-primary" value="Update"></input>
+                                <button class="btn btn-primary" value="Update" id="upd-btn">Update</button>
                             </div>
                         </div>
                     </form>
@@ -179,6 +188,9 @@
         //personal info update
         $('#updateJobForm').submit(function(e) {
             e.preventDefault();
+            var updateButton = document.getElementById('upd-btn');
+            updateButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...`;
+            updateButton.disabled = true;
 
             $.ajax({
                 url: '{{ route('account.processEditJob',['job_id' => $job->id]) }}',
@@ -186,6 +198,13 @@
                 dataType: 'json',
                 data: $('#updateJobForm').serializeArray(),
                 success: function(response) {
+
+                    if(response.status==false){ //stop preloader on error
+                        var updateButton = document.getElementById('upd-btn');
+                        updateButton.innerHTML = `Update`;
+                        updateButton.disabled = false;
+                    }
+
                     if (response.status == true) {
                         $('#title').removeClass('is-invalid')
                             .siblings('p')

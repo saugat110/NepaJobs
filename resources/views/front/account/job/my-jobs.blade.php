@@ -64,7 +64,7 @@
                                                         @if ($myjob -> status == 1)
                                                             <div class="job-status text-capitalize">Active</div>
                                                         @else
-                                                            <div class="job-status text-capitalize">Block</div>
+                                                            <div class="job-status text-capitalize">Blocked</div>
                                                         @endif
                                                     </td>
                                                     <td>

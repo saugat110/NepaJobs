@@ -3,11 +3,16 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobsController;
+use App\Mail\JobNotificationEmail;
+use App\Models\Job;
+use App\Models\User;
 use Barryvdh\Debugbar\DataCollector\JobsCollector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -120,6 +125,18 @@ Route::prefix('/account')->group(function () {
 
 Route::get('/test',function(){
     echo public_path('profilepic');
+});
+
+Route::get('/test2',function(){
+        $job = Job::find(23);
+        $employer = User::find(1);
+        $mailData = [
+            'job' => $job,
+            'employer' => $employer,
+            'employee' => 4,
+        ];
+    Mail::to("saugatsthapit3@gmail.com") -> send(new JobNotificationEmail($mailData));
+
 });
 
 

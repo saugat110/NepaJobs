@@ -247,7 +247,7 @@ class AccountController extends Controller
             'user_id' => Auth::id()
         ]) -> first();
 
-        //maile mero job ma edit garna milnu paryo
+        //maile mero job matra edit garna milnu paryo
         if($job == null){
             abort(404);
         }
@@ -291,6 +291,7 @@ class AccountController extends Controller
             $job->company_name  = $request -> company_name;
             $job->company_location  = $request -> company_location;
             $job->company_website  = $request -> company_website;
+            $job->status = $request->status;
             $job->save();
             session() -> flash('jobUpdated', 'Job Updated Successfully.');
 

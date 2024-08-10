@@ -161,7 +161,7 @@
                                 </div>
                             </div>
                             <div class="card-footer  p-4">
-                                <input type="submit" class="btn btn-primary" value="Create Job"></input>
+                                <button type="submit" class="btn btn-primary" id="crt-btn" value="Create Job">Create Job</button>
                             </div>
                         </div>
                     </form>
@@ -178,12 +178,24 @@
         $('#createJobForm').submit(function(e) {
             e.preventDefault();
 
+            var createButton = document.getElementById('crt-btn');
+            createButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Creating...`;
+            createButton.disabled = true;
+
             $.ajax({
                 url: '{{ route('account.processCreateJob') }}',
                 type: 'post',
                 dataType: 'json',
                 data: $('#createJobForm').serializeArray(),
                 success: function(response) {
+
+                    if(response.status==false){ //stop preloader
+                        var createButton = document.getElementById('crt-btn');
+                        createButton.innerHTML = `Create Job`;
+                        createButton.disabled = false;
+                    }
+
+
                     if (response.status == true) {
                         $('#title').removeClass('is-invalid')
                             .siblings('p')
