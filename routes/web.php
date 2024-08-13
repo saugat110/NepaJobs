@@ -131,6 +131,18 @@ Route::prefix('/account')->group(function () {
         //unsave job
         Route::post('/job/unsave', [AccountController::class, 'unSave']) ->name('account.jobunSave');
 
+        //get job applications for a job
+        Route::get('job/applications/{jobid}', [JobsController::class, 'jobApplications']) ->name('account.jobApplications');
+
+        //job application handler, accept, reject, pending
+        Route::post('/job/applicationhandler/', [JobsController::class, 'applicationHandler']) -> name('account.applicationHandler');
+
+        //job applicant profile
+        Route::get('/job/applicantProfile/{jobid}/{employeeid}/', [JobsController::class, 'applicantProfile']) -> name('account.applicantProfile');
+
+        //delete rejected job applications
+        Route::post('job/remove-rejected/',[JobsController::class, 'removeRejectedApplications']) -> name('account.removeRejectedApplications');
+
         //logout user and redirect to login page
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     });
@@ -152,6 +164,10 @@ Route::get('/test2',function(){
         ];
     Mail::to("saugatsthapit3@gmail.com") -> send(new JobNotificationEmail($mailData));
 
+});
+
+Route::get('/test3', function(){
+    return view('front.account.job.applicantprofile');
 });
 
 

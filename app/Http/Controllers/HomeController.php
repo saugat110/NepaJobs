@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     //this method will show home page
     public function index(){
-        $categories = Category::where('status', 1) -> orderBy('name', 'asc') -> take(8) -> get();
+        // $categories = Category::where('status', 1) -> orderBy('name', 'asc') -> take(8) -> get();
+
+        $categories = Category::withCount(['jobs as total_vacancies' => function ($query) {
+            $query->select(DB::raw('SUM(vacancy)'));
+        }])
+        ->where('status', 1)
+        ->orderBy('total_vacancies', 'desc')
+        ->take(8)
+        ->get();
+        
 
         //for search
         $newcategories = Category::where('status', 1) -> orderBy('name', 'asc')->get();

@@ -9631,6 +9631,22 @@ footer .nav-link {
 .section-5 .account-nav ul li a:hover {
   color: #B0B7FC;
 }
+
+#rejectedbtn{
+  border-color: #e68781;
+  border:2px solid;
+  background-color:white !important;
+  color: #e68781;
+  font-weight: 500 !important;
+  /* font-family: 'Mont-Regular' !important; */
+}
+
+#rejectedbtn:hover{
+  background-color:#de5d54 !important;
+  color:white !important;
+  border-color: #e68781 !important;
+}
+
 @font-face {
   font-family: 'fontello';
   src: url('../fonts/fontello/fontello.eot?20213350');
@@ -10032,3 +10048,16 @@ footer .nav-link {
   content: '';
 }
 /* '' */
+
+/* Hide scrollbar in Firefox */
+body, html {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar in WebKit-based browsers (Chrome, Safari, Edge) */
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+

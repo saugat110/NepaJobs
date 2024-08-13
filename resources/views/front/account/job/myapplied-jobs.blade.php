@@ -10,7 +10,7 @@
                     <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item active">My Jobs</li>
+                            <li class="breadcrumb-item active">Jobs Applied</li>
                         </ol>
                     </nav>
                 </div>
@@ -61,10 +61,12 @@
                                                     {{-- implement this later --}}
                                                     <td>{{ $jobapp ->job->applications -> count() }} Applications</td>
                                                     <td>
-                                                        @if ($jobapp->job->status == 1)
-                                                            <div class="job-status text-capitalize">Active</div>
-                                                        @else
-                                                            <div class="job-status text-capitalize">Blocked</div>
+                                                        @if ($jobapp->application_status == -1)
+                                                            <div class="job-status text-capitalize">Rejected</div>
+                                                        @elseif($jobapp->application_status == 0)
+                                                            <div class="job-status text-capitalize">Pending</div>
+                                                        @elseif($jobapp->application_status == 1)
+                                                            <div class="job-status text-capitalize">Accepted</div>
                                                         @endif
                                                     </td>
                                                     <td>
@@ -91,7 +93,7 @@
                                             @endforeach
                                         @else
                                         <tr>
-                                            <td colspan="5">You have not applied for any job yet.</td>
+                                            <td colspan="5">No Data.</td>
                                         </tr>
                                         @endif
                                     </tbody>

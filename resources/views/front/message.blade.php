@@ -90,6 +90,19 @@
 @endif
 
 
+@if (session()->has('jobaccepted'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobaccepted') }}
+    </div>
+@endif
+
+@if (session()->has('rejecteddeleted'))
+    <div class="alert alert-success" role="alert">
+        {{ session('rejecteddeleted') }}
+    </div>
+@endif
+
+
 
 
 

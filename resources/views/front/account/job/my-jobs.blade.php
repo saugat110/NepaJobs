@@ -59,7 +59,9 @@
                                                     </td>
                                                     <td>{{ \Carbon\Carbon::parse($myjob -> created_at)->format('d M, Y') }}</td>
                                                     {{-- implement this later --}}
-                                                    <td>{{ $myjob -> applications -> count() }} Applications</td>
+                                                    {{-- <td> <a href="{{ Route('account.jobApplications',['jobid'=>$myjob->id]) }}"> {{ $myjob->applications->where('application_status', '!=', -1)->count() }} Applications </a></td> --}}
+                                                    <td> <a href="{{ Route('account.jobApplications',['jobid'=>$myjob->id]) }}"> {{ $myjob->applications->count() }} Applications </a></td>
+
                                                     <td>
                                                         @if ($myjob -> status == 1)
                                                             <div class="job-status text-capitalize">Active</div>
@@ -67,6 +69,7 @@
                                                             <div class="job-status text-capitalize">Blocked</div>
                                                         @endif
                                                     </td>
+
                                                     <td>
                                                         <div class="action-dots float-end">
                                                             <button href="#" class="btn" data-bs-toggle="dropdown"
@@ -86,6 +89,7 @@
                                                             </ul>
                                                         </div>
                                                     </td>
+                                                    
                                                 </tr>
                                             @endforeach
                                         @else

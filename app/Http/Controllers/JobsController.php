@@ -85,9 +85,28 @@ class JobsController extends Controller
         if($job == null){
             abort(404);
         }
-        return view('front.jobDetail',['job' => $job]);
-    }
 
+        //fetch job applications, first check if the job is posted by the user, and second
+        //check if there are applications for this job in job_applications table
+
+                // $job_posted_byuser = Job::where([
+                //     'id' => $jobid,
+                //     'user_id' => Auth::id()
+                // ])->exists();
+
+                // if($job_posted_byuser){
+                //     $job_has_applications = JobApplication::where('job_id', $jobid) -> exists();
+                //     if($job_has_applications){
+                //         $jobapplications = JobApplication::where('job_id', $jobid) -> get();
+                //         return view('front.jobDetail',[
+                //             'job' => $job,
+                //             'jobapplications' => $jobapplications,
+                //         ]);
+                //     }
+                // }
+
+        return view('front.jobDetail',['job' => $job, 'jobapplications' => '']);
+    }
 
     //apply job
     public function applyJob(Request $request){
@@ -174,5 +193,99 @@ class JobsController extends Controller
         }
     }
 
+    //return job applications page for a job
+    public function jobApplications(Request $request, $jobid){
+            $job_posted_byuser = Job::where([
+                'id' => $jobid,
+                'user_id' => Auth::id()
+            ])->exists();
+
+            if($job_posted_byuser){
+                    // $jobapplications = JobApplication::where('job_id', $jobid)
+                    //                 ->where('application_status', '!=', -1)
+                    //                 ->orderBy('created_at', 'desc')
+                    //                 ->paginate(5);
+
+                    $currentPage = request('page', 1);
+                    $jobapplications = JobApplication::where('job_id', $jobid)
+                                    ->orderByRaw("CASE WHEN application_status = -1 THEN 1 ELSE 0 END")
+                                    ->orderBy('created_at', 'desc')
+                                    ->paginate(1 , ['*'], 'page', $currentPage);
+                    return view('front.account.job.applicant',['jobapplications'=>$jobapplications,'jid'=>$jobid]);
+            }
+    } 
+        
+    //handle application accept and reject
+    public function applicationHandler(Request $request){
+        $jobapplication = JobApplication::where([
+            'job_id' => $request->jobid,
+            'user_id' => $request->userid
+        ])->first();
+
+        //job application xa vne
+        if($jobapplication != null){
+            if($request->status == 1){
+                $jobapplication->application_status = 1;
+                $jobapplication->save();
+
+                $jobapplication -> job ->decrement('vacancy', 1);
+                session()->flash('jobaccepted', "Job Accepted");
+                return response() -> json(['status'=>'accepted']);
+            }
+            if($request->status == -1){
+                if($jobapplication -> application_status != 0){
+                    $jobapplication -> job ->increment('vacancy', 1);
+                }
+                
+                $jobapplication->application_status = -1;
+                $jobapplication->save();
+
+                
+                return response() -> json(['status'=>'rejected']);
+            }
+        }else{
+            return response() -> json(['status'=>'jobnotfound']);
+        }
+        
+    }
     
+    //remove rejected applications
+    public function removeRejectedApplications(Request $request){
+        // echo $request->jobid;
+
+        $jobapplications = JobApplication::where([
+            'job_id' => $request->jobid,
+            'application_status' => -1
+        ])->get();
+        foreach($jobapplications as $jobapplication){
+            $jobapplication -> delete();
+            session() -> flash('rejecteddeleted', "Cleared rejected Applications");
+        }
+        return response() -> json([
+            'jobid' => $request -> jobid
+        ]);
+    }
+
+    //job applicatant profile handler
+    public function applicantProfile($jobid, $employeeid){
+
+        //first check if the employee belongs to the employer
+        //jsko ni profile access garna milnu vaena
+        $validtoaccess = JobApplication::where([
+            'job_id' => $jobid,
+            'user_id' => $employeeid,
+            'employer_id' => Auth::id()
+        ]) -> exists();
+
+        if($validtoaccess){
+            $applicant = User::where('id', $employeeid)->first();
+            // if($applicant!=null){
+            //     echo "yes";
+            // }
+            return view('front.account.job.applicantprofile', ['applicant'=>$applicant, 'jID' => $jobid]);
+        }else{
+            abort(404);
+        }
+    }
+
 }

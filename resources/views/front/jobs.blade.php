@@ -157,7 +157,6 @@
         const checkedJobTypes = $("input[type='checkbox'][name='jobType']:checked").map(function(){
             return $(this).val();
         }).get();
-
         const sort = $('#sort').val();
 
 

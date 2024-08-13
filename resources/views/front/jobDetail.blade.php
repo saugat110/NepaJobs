@@ -30,10 +30,10 @@
                                         </a>
                                         <div class="links_locat d-flex align-items-center">
                                             <div class="location">
-                                                <p> <i class="fa fa-map-marker"></i> Noida, India</p>
+                                                <p> <i class="fa fa-map-marker"></i> {{ $job->location }}</p>
                                             </div>
                                             <div class="location">
-                                                <p> <i class="fa fa-clock-o"></i> Part-time</p>
+                                                <p> <i class="fa fa-clock-o"></i> {{ $job->jobType->name }}</p>
                                             </div>
                                             @if (Auth::id() == $job->user_id)
                                                 <div class="location">
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="jobs_right">
                                     <div class="apply_now">
-                                        @if (Auth::check())
+                                        @if (Auth::check() && (Auth::id()!=$job->user_id))
                                             <a class="heart_mark" onclick="saveJob({{ $job->id }})"> <i class="fa fa-heart-o"
                                             aria-hidden="true"></i></a>
                                         @endif
@@ -80,24 +80,55 @@
                             <div class="border-bottom"></div>
                             <div class="pt-3 text-end">
 
-                                @if (Auth::check())
+                                @if (Auth::check() && (Auth::id()!=$job->user_id))
                                     <a onclick="saveJob({{  $job->id }})" class="btn btn-secondary" id="sv-btn">Save</a>
-                                @else
+                                @elseif(!Auth::check())
                                     <a class="btn btn-secondary disabled">Login to Save</a>
                                 @endif
 
-                                @if (Auth::check())
+                                @if (Auth::check() && (Auth::id()!=$job->user_id))
                                     <a onclick="applyJob({{ $job->id }})" class="btn btn-primary"
                                         id="apply-btn">Apply</a>
-                                @else
+                                @elseif(!Auth::check())
                                     <a href="#" class="btn btn-primary disabled">Login to Apply</a>
                                 @endif
                             </div>
                         </div>
                     </div>
+
+                    {{-- added applications--}}
+                    {{-- @if($jobapplications)
+                    <div class="card shadow border-0 mt-3">
+                        <div class="job_details_header">
+                            <div class="single_jobs white-bg d-flex justify-content-between">
+                                <div class="jobs_left d-flex align-items-center">
+                                    <div class="jobs_conetent">
+                                            <h4>Applicants</h4>
+                                    </div>
+                                </div>
+                                <div class="jobs_right"></div>
+                            </div>
+                        </div>
+                        <div class="descript_wrap white-bg">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Applied Date</th>
+                                </tr>
+                                    @foreach ($jobapplications as $jobapplication)
+                                        <tr>
+                                            <td>{{ $jobapplication->user->name }}</td>
+                                            <td>{{ $jobapplication->user->email }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($jobapplication->applied_data)->format('d M, Y') }}</td>
+                                        </tr>
+                                    @endforeach
+                            </table>
+                        </div>
+                    </div>
+                    @endif --}}
+                    
                 </div>
-
-
 
                 <div class="col-md-4">
                     <div class="card shadow border-0">
@@ -139,10 +170,18 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
 @endsection
+
+
+
+
+
+
+
 
 @section('customJs')
     <script>

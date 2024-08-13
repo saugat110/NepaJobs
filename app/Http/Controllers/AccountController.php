@@ -152,7 +152,7 @@ class AccountController extends Controller
 
             //profilepic ma pic save vayo vne matra crop garne
             if($succesfully_moved){
-                //create thumbnail and save in thumb
+                //create thumbnail and save in thumb, package used image intervention
                 $source_path = public_path('profilepic/'.$imgName);
                 $manager = new ImageManager(Driver::class);
                 $image2 = $manager->read($source_path);
@@ -296,6 +296,16 @@ class AccountController extends Controller
             $job->status = $request->status;
             $job->save();
             session() -> flash('jobUpdated', 'Job Updated Successfully.');
+
+            //if status of job=0,)(vacancy banda) then saved jobs bata ni hatune
+            if($request->status == 0){
+                $savedJobs = SavedJob::where('job_id', $job_id)->get();
+                if($savedJobs){
+                     foreach($savedJobs as $savedJob){
+                        $savedJob->delete();
+                     }
+                }
+            }
 
             return response() 
                     -> json([

@@ -18,7 +18,7 @@
     </p>
     <p></p>
     <p style="font-size:17px;"">Job Title: {{ $mailData['job'] -> title }}</p>
-    <p>Employee Details:</p>
+    <p>Applicant Details:</p>
     <p>Name: {{ $mailData['employee'] -> name  }}</p>
     <p>Email: {{ $mailData['employee'] -> email  }}</p>
     <p>Phone: {{ $mailData['employee'] -> mobile  }}</p>

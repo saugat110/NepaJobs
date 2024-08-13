@@ -44,13 +44,13 @@
                                     <p></p>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="" class="mb-2">Designation*</label>
+                                    <label for="" class="mb-2">Designation</label>
                                     <input type="text" name="designation" id="designation" placeholder="Designation"
                                         class="form-control" value="{{ $user->designation }}">
                                     <p></p>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="" class="mb-2">Mobile*</label>
+                                    <label for="" class="mb-2">Mobile</label>
                                     <input type="text" name="mobile" id="mobile" placeholder="Mobile"
                                         class="form-control" value="{{ $user->mobile }}">
                                     <p></p>
