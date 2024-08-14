@@ -65,20 +65,23 @@
 
                     {{-- update password --}}
                     <div class="card border-0 shadow mb-4">
-                        <form action="">
+                        <form action="" id="changePasswordForm" name="changePasswordForm">
                             <div class="card-body p-4">
                                 <h3 class="fs-4 mb-1">Change Password</h3>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Old Password*</label>
-                                    <input type="password" placeholder="Old Password" class="form-control">
+                                    <input type="password"  id="old_password" name="old_password" placeholder="Old Password" class="form-control">
+                                    <p></p>
                                 </div>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">New Password*</label>
-                                    <input type="password" placeholder="New Password" class="form-control">
+                                    <input type="password" id="new_password" name="new_password" placeholder="New Password" class="form-control">
+                                    <p></p>
                                 </div>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Confirm Password*</label>
-                                    <input type="password" placeholder="Confirm Password" class="form-control">
+                                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" class="form-control">
+                                    <p></p>
                                 </div>
                             </div>
                             <div class="card-footer  p-4">
@@ -178,6 +181,60 @@
                                 .removeClass('invalid-feedback')
                                 .html('');
                         }
+                    }
+                }
+            });
+        });
+
+        //update password
+        $('#changePasswordForm').submit(function(e){
+            e.preventDefault();
+            console.log("hi");
+            $.ajax({
+                url: '{{ route('account.changePassword') }}',
+                method: 'PUT',
+                dataType: 'json',
+                data:$('#changePasswordForm').serializeArray(),
+                success:function(response){
+                    // console.log(response.errors)
+
+                    if(response.status == false){
+                        let errors = response.errors;
+                        if (errors.old_password) {
+                            $('#old_password').addClass('is-invalid')
+                                .siblings('p')
+                                .addClass('invalid-feedback')
+                                .html(errors.old_password);
+                        } else {
+                            $('#old_password').removeClass('is-invalid')
+                                .siblings('p')
+                                .removeClass('invalid-feedback')
+                                .html('');
+                        }
+                        if (errors.new_password) {
+                            $('#new_password').addClass('is-invalid')
+                                .siblings('p')
+                                .addClass('invalid-feedback')
+                                .html(errors.new_password);
+                        } else {
+                            $('#new_password').removeClass('is-invalid')
+                                .siblings('p')
+                                .removeClass('invalid-feedback')
+                                .html('');
+                        }
+                        if (errors.confirm_password) {
+                            $('#confirm_password').addClass('is-invalid')
+                                .siblings('p')
+                                .addClass('invalid-feedback')
+                                .html(errors.confirm_password);
+                        } else {
+                            $('#confirm_password').removeClass('is-invalid')
+                                .siblings('p')
+                                .removeClass('invalid-feedback')
+                                .html('');
+                        }
+                    }else{
+                        window.location.href = "{{ url() -> current() }}";
                     }
                 }
             });

@@ -2,7 +2,8 @@
 
 
 @section('main')
-<div class="container-fluid ms-3 mt-4">
+
+<div class="container-fluid ms-5 mt-4">
     <div class="row">
         <div class="col">
             <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
@@ -14,6 +15,7 @@
         </div>
     </div>
 </div>
+
     <div class="container-fluid job_details_area mt-3 ps-0 pe-0">
         <div class="row pb-5 justify-content-center">
             <div class="col-md-8">

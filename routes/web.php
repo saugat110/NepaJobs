@@ -98,6 +98,9 @@ Route::prefix('/account')->group(function () {
         //update profile picture
         Route::post('/profile/updatePic', [AccountController::class, 'updateProfilePic']) -> name('account.updateProfilePic');
 
+        //update password
+        Route::put('/updatePassword', [AccountController::class, 'changePassword']) -> name('account.changePassword');
+
         //return create job page
         Route::get('/create-job', [AccountController::class, 'createJobs']) -> name('account.createJob');
 
@@ -167,7 +170,7 @@ Route::get('/test2',function(){
 });
 
 Route::get('/test3', function(){
-    return view('front.account.job.applicantprofile');
+    
 });
 
 

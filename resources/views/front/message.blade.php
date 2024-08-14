@@ -102,6 +102,18 @@
     </div>
 @endif
 
+@if (session()->has('passwordChanged'))
+    <div class="alert alert-success" role="alert">
+        {{ session('passwordChanged') }}
+    </div>
+@endif
+
+@if (session()->has('passwordChangeError'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('passwordChangeError') }}
+    </div>
+@endif
+
 
 
 

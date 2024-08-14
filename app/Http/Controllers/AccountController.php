@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -125,6 +126,37 @@ class AccountController extends Controller
                         'status' => false,
                         'errors' => $validator->errors()
                     ]);
+        }
+    }
+
+    //change password
+    public function changePassword(Request $request){
+        $validator = Validator::make($request->all(),[
+            'old_password' => 'required',
+            'new_password' => 'required|min:5',
+            'confirm_password' => 'required|same:new_password'
+        ]); 
+
+        if($validator -> passes()){
+            if(Hash::check($request->old_password, Auth::user()->password)){
+                $user = User::find(Auth::id());
+                $user -> password = Hash::make($request -> new_password);
+                $user -> save();
+                session() -> flash('passwordChanged', 'Password Changed Successfully');
+                return response() -> json([
+                    'status' => true
+                ]);
+            }else{
+                session() -> flash('passwordChangeError', "Old Password doesn't Match");
+                return response() -> json([
+                    'status' =>true
+                ]);
+            }
+        }else{
+            return response() -> json([
+                'status' => false,
+                'errors' => $validator -> errors()
+            ]);
         }
     }
 
