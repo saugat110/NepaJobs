@@ -13,11 +13,19 @@ class HomeController extends Controller
     public function index(){
         // $categories = Category::where('status', 1) -> orderBy('name', 'asc') -> take(8) -> get();
 
-        $categories = Category::withCount(['jobs as total_vacancies' => function ($query) {
-            $query->select(DB::raw('SUM(vacancy)'));
+        // $categories = Category::withCount(['jobs as total_vacancies' => function ($query) {
+        //     $query->select(DB::raw('SUM(vacancy)'));
+        // }])
+        // ->where('status', 1)
+        // ->orderBy('total_vacancies', 'desc')
+        // ->take(8)
+        // ->get();
+
+        $categories = Category::withCount(['jobs as total_positions' => function ($query) {
+            $query->select(DB::raw('COUNT(id)'));
         }])
         ->where('status', 1)
-        ->orderBy('total_vacancies', 'desc')
+        ->orderBy('total_positions', 'desc')
         ->take(8)
         ->get();
         

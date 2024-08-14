@@ -56,26 +56,25 @@
                         <div class="descript_wrap white-bg">
                             <div class="single_wrap">
                                 <h4>Job description</h4>
-                                {{ $job->description }}
+                                <p style="white-space:pre-wrap;text-align:justify;">{{$job->description}}</p>
                             </div>
                             <div class="single_wrap">
-                                <h4>Responsibility</h4>
                                 @if (!empty($job->responsilibity))
-                                    {{ $job->responsilibity }}
+                                    <h4>Responsibility</h4>
+                                    <p style="white-space:pre-wrap;text-align:justify;">{{$job->responsilibity}}</p>
                                 @endif
                             </div>
                             <div class="single_wrap">
-                                <h4>Qualifications</h4>
                                 @if (!empty($job->qualifications))
-                                    {{ $job->qualifications }}
+                                    <h4>Qualifications</h4>
+                                    <p style="white-space:pre-wrap;text-align:justify;">{{$job->qualifications}}</p>
                                 @endif
                             </div>
-                            <div class="single_wrap">
+                            <div class="single_wrap" >
                                 @if (!empty($job->benefits))
                                     <h4>Benefits</h4>
-                                    <p>{{ $job->benefits }}</p>
+                                    <p style="white-space:pre-wrap;text-align:justify;">{{$job->benefits}}</p>
                                 @endif
-
                             </div>
                             <div class="border-bottom"></div>
                             <div class="pt-3 text-end">
@@ -130,7 +129,7 @@
                     
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-4 mt-4 mt-md-0">
                     <div class="card shadow border-0">
                         <div class="job_sumary">
                             <div class="summery_header pb-1 pt-4">

@@ -66,7 +66,7 @@
                                 <a href="{{ route('jobs') }}?category={{ $category->id }}">
                                     <h4 class="pb-2">{{ $category->name }}</h4>
                                 </a>
-                                <p class="mb-0"> <span>{{ $category->jobs->sum('vacancy') }}</span> Available position</p>
+                                <p class="mb-0"> <span>{{ $category->jobs->where('status','!=', 0)->count() }}</span> Available positions</p>
                             </div>
                         </div>
                     @endforeach
