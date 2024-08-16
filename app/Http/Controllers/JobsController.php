@@ -159,7 +159,7 @@ class JobsController extends Controller
         ];
 
             try{
-            Mail::to($employer->email) -> send(new JobNotificationEmail($mailData));
+                Mail::to($employer->email) -> send(new JobNotificationEmail($mailData));
             }catch(Exception $e){
             }
          session() -> flash('applyjobsuccess', "Applied for Job Successfully.");
@@ -240,13 +240,15 @@ class JobsController extends Controller
                 $jobapplication->application_status = -1;
                 $jobapplication->save();
 
-                
+                    if($request->fromprofile != null){
+                        session() -> flash("jobrejected", "Application Rejected");
+                    }
                 return response() -> json(['status'=>'rejected']);
             }
         }else{
             return response() -> json(['status'=>'jobnotfound']);
         }
-        
+   
     }
     
     //remove rejected applications

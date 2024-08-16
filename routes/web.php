@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobsController;
 use App\Mail\JobNotificationEmail;
@@ -153,6 +154,17 @@ Route::prefix('/account')->group(function () {
 });
 
 
+//admin routes
+Route::prefix('admin')->group(function(){
+
+    Route::middleware('auth', 'checkAdmin')->group(function(){
+
+        //
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.Dashboard');
+    });
+});
+
+
 Route::get('/test',function(){
     echo public_path('profilepic');
 });
@@ -170,7 +182,9 @@ Route::get('/test2',function(){
 });
 
 Route::get('/test3', function(){
-    
+    echo "<pre>";
+    print_r(session()->all());
+    echo "</pre>";
 });
 
 

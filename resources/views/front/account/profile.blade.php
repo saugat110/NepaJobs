@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="card-footer  p-4">
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary" id="upt_pro_btn">Update</button>
                             </div>
                         </form>
                     </div>
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="card-footer  p-4">
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary" id="upt_pwd_btn">Update</button>
                             </div>
                         </form>
                     </div>
@@ -104,6 +104,9 @@
         //personal info update
         $('#updateProfileForm').submit(function(e) {
             e.preventDefault();
+            var updateProButton = document.getElementById('upt_pro_btn');
+            updateProButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...`;
+            updateProButton.disabled = true;
 
             $.ajax({
                 url: '{{ route('account.updateProfile') }}',
@@ -131,7 +134,9 @@
                         window.location.href = "{{ route('account.profile') }}";
 
                         //some error in form
-                    } else {
+                    }else {
+                        updateProButton.disabled = false;
+                        updateProButton.innerHTML = 'Update';
                         var errors = response.errors;
 
                         if (errors.name) {
@@ -189,7 +194,9 @@
         //update password
         $('#changePasswordForm').submit(function(e){
             e.preventDefault();
-            console.log("hi");
+            var updatePwdButton = document.getElementById('upt_pwd_btn');
+            updatePwdButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...`;
+            updatePwdButton.disabled = true;
             $.ajax({
                 url: '{{ route('account.changePassword') }}',
                 method: 'PUT',
@@ -199,6 +206,9 @@
                     // console.log(response.errors)
 
                     if(response.status == false){
+                        updatePwdButton.disabled = false;
+                        updatePwdButton.innerHTML = 'Update';
+
                         let errors = response.errors;
                         if (errors.old_password) {
                             $('#old_password').addClass('is-invalid')

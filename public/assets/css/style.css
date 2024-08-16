@@ -9646,6 +9646,44 @@ footer .nav-link {
   color:white !important;
   border-color: #e68781 !important;
 }
+#admin_title{
+  font-size: 31px;
+  margin-bottom: 0px !important;
+  position:relative !important;
+  padding-bottom: 13px;
+}
+#admin_title::after{
+  content: "" !important;
+  position: absolute !important;
+  background-color: #A8DF8E !important;
+  background-color: #B0B7FC !important;
+  width: 130px !important;
+  height: 4px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+}
+
+#accept_btn{
+  background-color: #5EE294;
+  border: 0px;
+  padding: 3px 9px;
+  color:white;
+}
+
+#accept_btn:hover{
+  background-color: #1C9C50;
+}
+
+#reject_btn{
+  color: white;
+  background-color: #E77B85;
+  border: 0px;
+  padding: 3px 9px;
+}
+
+#reject_btn:hover{
+  background-color: #621219;
+}
 
 @font-face {
   font-family: 'fontello';

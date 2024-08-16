@@ -21,12 +21,12 @@
                     @include('front.message')
                     <div class="card shadow border-0">
                         <div class="job_details_header">
-                            <div class="single_jobs white-bg d-flex justify-content-between">
+                            <div class="single_jobs white-bg d-flex justify-content-between pb-3">
                                 <div class="jobs_left d-flex align-items-center">
 
                                     <div class="jobs_conetent">
                                         <a href="#">
-                                            <h4>{{ $job->title }}</h4>
+                                            <h3 class="fs-2">{{ $job->title }}</h3>
                                         </a>
                                         <div class="links_locat d-flex align-items-center">
                                             <div class="location">
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="descript_wrap white-bg">
+                        <div class="descript_wrap white-bg ">
                             <div class="single_wrap">
                                 <h4>Job description</h4>
                                 <p style="white-space:pre-wrap;text-align:justify;">{{$job->description}}</p>

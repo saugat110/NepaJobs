@@ -114,6 +114,18 @@
     </div>
 @endif
 
+@if (session()->has('notAdmin'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('notAdmin') }}
+    </div>
+@endif
+
+@if (session()->has('jobrejected'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('jobrejected') }}
+    </div>
+@endif
+
 
 
 

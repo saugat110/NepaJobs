@@ -1,0 +1,28 @@
+.dash_item{
+    font-size: 21px;
+    color: rgb(255, 255, 255);
+}
+.dash_item > :first-child{
+    background-color: #f9ed7d;
+    border-radius: 5px;
+}
+
+.dash_item > :nth-child(2){
+    border-radius: 5px;
+    background-color: #8FFBBB;
+}
+
+.dash_item > :nth-child(3){
+    border-radius: 5px;
+    background-color: #8F99FB;
+}
+
+.dash_item > :nth-child(4){
+    border-radius: 5px;
+    background-color: #FB8FCF;
+}
+
+.dash_item > :nth-child(5){
+    background-color: #FB8F99;
+    border-radius: 5px;
+}

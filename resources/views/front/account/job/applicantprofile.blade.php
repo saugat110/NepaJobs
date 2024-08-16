@@ -46,13 +46,31 @@
                         <div class="ps-4">
                             <p> Name:<span class="ps-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $applicant->name }}</span></p>
                             <p>Email:<span class="ps-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $applicant->email }}</span></p>
-                            <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">{{ $applicant->mobile }}</span></p>
-                            <p>Designation:&nbsp;&nbsp;{{ $applicant -> designation }}</p>
+
+                            @if ($applicant -> mobile !=null && $applicant->mobile!='')
+                                <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">{{ $applicant->mobile }}</span></p>
+                            @else
+                                <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">---------------------</span></p>
+                            @endif
+
+                            @if ($applicant -> designation !=null && $applicant->designation!='')
+                                <p>Designation:&nbsp;&nbsp;{{ $applicant -> designation }}</p>
+                            @else
+                                <p>Designation:&nbsp;&nbsp;---------------------</p>
+                            @endif
 
                             {{-- forskills --}}
                             <div>
                                 <p>Skills:</p>
                             </div>
+
+                            @if (! App\Models\JobApplication::where(['job_id'=>$jID, 'user_id'=>$applicant->id, 'application_status'=>1])->exists())
+                                <button onclick="accept({{ $jID }}, {{ $applicant->id }})" id="accept_btn">Accept</button>
+                            @endif
+
+                            @if (! App\Models\JobApplication::where(['job_id'=>$jID, 'user_id'=>$applicant->id, 'application_status'=>-1])->exists())
+                                <button onclick="reject({{ $jID }}, {{ $applicant->id }})" id="reject_btn">Reject</button>
+                            @endif
                         </div>
                         <div class="pt-3 text-end"></div>
                     </div>
@@ -64,4 +82,31 @@
 
 
 @section('customJs')
+<script>
+        function accept(jobid, userid){
+            $.ajax({
+                url: "{{ route('account.applicationHandler') }}",
+                type: 'POST',
+                data: {jobid:jobid, userid:userid, status:1},
+                dataType:'json',
+                success: function(response){
+                    console.log(response.status);
+                        window.location.href = "{{ url()->current() }}";
+                }
+            });
+        }
+
+        function reject(jobid, userid){
+            $.ajax({
+                url: "{{ route('account.applicationHandler',['fromprofile'=>1]) }}", 
+                type: 'POST',
+                data: {jobid:jobid, userid:userid, status:-1},
+                dataType:'json',
+                success: function(response){
+                    console.log(response.status);
+                        window.location.href = "{{ url()->current() }}";
+                }
+            });
+        }
+</script>
 @endsection

@@ -7,11 +7,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no" />
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="csrf-token" content="{{csrf_token()}}">
+	{{-- <meta name="csrf-token" content="lcybzWw2lWUYwzDdA0XVplU3d0yYBbg9BTETfB4M"> --}}
+
 	<meta name="pinterest" content="nopin" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}" />
 	<!-- Fav Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="#" />
+	@stack('head')
 </head>
 
 <body data-instant-intensity="mousedown">
@@ -30,7 +33,11 @@
 					<li class="nav-item">
 						<a class="nav-link" aria-current="page" href="{{ route('jobs') }}">Find Jobs</a>
 					</li>										
-				</ul>			
+				</ul>		
+				
+				@if (Auth::check() && Auth::user()->role == 'admin')
+					<a class="btn btn-outline-primary me-2" href="{{route('admin.Dashboard')}}" type="submit">Admin</a>
+				@endif
 				
 				@if (!Auth::check())
 					<a class="btn btn-outline-primary me-2" href="{{route('account.login')}}" type="submit">Login</a>
