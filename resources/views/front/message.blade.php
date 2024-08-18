@@ -126,6 +126,27 @@
     </div>
 @endif
 
+@if (session()->has('userStateManage'))
+    <div class="alert alert-success" role="alert">
+        {{ session('userStateManage') }}
+    </div>
+@endif
+
+@if (session()->has('userStateError'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('userStateError') }}
+    </div>
+@endif
+
+@if (session()->has('deletedUser'))
+    <div class="alert alert-success" role="alert">
+        {{ session('deletedUser') }}
+    </div>
+@endif
+
+
+
+
 
 
 

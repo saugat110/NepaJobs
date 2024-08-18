@@ -68,15 +68,40 @@ class AccountController extends Controller
             'password' => 'required'
         ]);
 
+        // if($validator -> passes()){
+        //     if(Auth::attempt(['email' => $request->email, 'password' => $request-> password])){
+        //         // echo "matched";
+        //         return redirect() -> route('account.profile');
+        //     //for login error redirect
+        //     }else{
+        //         session() -> flash('loginerror', 'Invalid email or password');
+        //         return redirect() 
+        //             -> route('account.login') 
+        //             -> withInput($request->only('email')); //with input for old('email'
+        //     }
+        // //for validation error redirect
+        // }else{
+        //     return redirect() -> route('account.login') 
+        //         -> withErrors($validator) 
+        //         -> withInput($request->only('email')); //with input for old('email')
+        // }
+
         if($validator -> passes()){
             if(Auth::attempt(['email' => $request->email, 'password' => $request-> password])){
                 // echo "matched";
-                return redirect() -> route('account.profile');
+                if(Auth::user()->status == 1){
+                    return redirect() -> route('account.profile');
+                //if user is blocked redirect to login page, status = 0
+                }else{
+                    Auth::logout();
+                    session() -> flash('loginerror', 'Your account is currently disabled');
+                    return redirect() -> route('account.login')->withInput($request->only('email'));
+                }
             //for login error redirect
             }else{
+                session() -> flash('loginerror', 'Invalid email or password');
                 return redirect() 
                     -> route('account.login') 
-                    -> with('loginerror', 'Credentials Do Not Match, Try again')
                     -> withInput($request->only('email')); //with input for old('email'
             }
         //for validation error redirect
@@ -394,9 +419,15 @@ class AccountController extends Controller
 
     //return saved jobs page
     public function savedJobs(){
-        $savedjobs = SavedJob::where([
-            'user_id' => Auth::id()
-        ])-> orderBy('created_at', 'desc') -> paginate(4);
+        // $savedjobs = SavedJob::where([
+        //     'user_id' => Auth::id()
+        // ])-> orderBy('created_at', 'desc') -> paginate(4);
+
+        //job ko owner disable, xa vne tyo user ko jobs lai  saved jobs ma na dekhaune
+        $savedjobs = SavedJob::where('user_id', Auth::id())
+                    ->whereHas('job.user',function($query){
+                        $query -> where('status', 1);
+                    })->orderBy('created_at', 'desc')->paginate(4);
         
         return view('front.account.job.saved-jobs',[
             'savedjobs' => $savedjobs

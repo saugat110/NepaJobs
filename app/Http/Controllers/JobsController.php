@@ -21,7 +21,18 @@ class JobsController extends Controller
         $categories = Category::where('status', 1) -> get();
         $jobtypes = JobType::where('status', 1) -> get();
 
-        $jobs = Job::where('status', 1);
+        // $jobs = Job::where('status', 1);
+
+        //active users(status=1) ko matra jobs dekhaune
+        $jobs = Job::where('status', 1)->whereHas('user', function($query){
+            $query->where('status', 1);
+        });
+
+        //active users(status=1) ko matra jobs dekhaune ani aru job + afno nadekhaune
+        // $jobs = Job::where('status', 1)->where('user_id','!=', Auth::user()->id)->whereHas('user', function($query){
+        //     $query->where('status', 1);
+        // });
+
 
         //search using keyword
         if(!empty($request -> keyword)){
@@ -195,11 +206,19 @@ class JobsController extends Controller
 
     //return job applications page for a job
     public function jobApplications(Request $request, $jobid){
+            //paila jobapplication ma requested job ko application xa ki xaina check
+            $jobapplicationpresent = JobApplication::where('job_id', $jobid)->exists();
+            if(!$jobapplicationpresent){
+                return abort(404);
+            }
+
+            //job application xa, tara requested job ko applications, cahi requesting user lai belong garxa?
             $job_posted_byuser = Job::where([
                 'id' => $jobid,
                 'user_id' => Auth::id()
             ])->exists();
-
+                
+            //aru ko jobs ko job application herna milnu vaena
             if($job_posted_byuser){
                     // $jobapplications = JobApplication::where('job_id', $jobid)
                     //                 ->where('application_status', '!=', -1)
@@ -210,7 +229,7 @@ class JobsController extends Controller
                     $jobapplications = JobApplication::where('job_id', $jobid)
                                     ->orderByRaw("CASE WHEN application_status = -1 THEN 1 ELSE 0 END")
                                     ->orderBy('created_at', 'desc')
-                                    ->paginate(1 , ['*'], 'page', $currentPage);
+                                    ->paginate(5 , ['*'], 'page', $currentPage);
                     return view('front.account.job.applicant',['jobapplications'=>$jobapplications,'jid'=>$jobid]);
             }
     } 

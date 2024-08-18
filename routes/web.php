@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobsController;
 use App\Mail\JobNotificationEmail;
@@ -159,8 +160,17 @@ Route::prefix('admin')->group(function(){
 
     Route::middleware('auth', 'checkAdmin')->group(function(){
 
-        //
+        //returns admin dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.Dashboard');
+
+        //get all users
+        Route::get('/users', [UserController::class, 'index'])->name('admin.users.list');
+
+        //enable, disable user
+        Route::put('/update-user-status',[UserController::class, 'userStateManage'])->name('admin.updateUserStatus');
+
+        //
+        Route::post('/delete-user', [UserController::class, 'deleteUser']) ->name('admin.deleteUser');
     });
 });
 
@@ -187,6 +197,12 @@ Route::get('/test3', function(){
     echo "</pre>";
 });
 
+Route::get('/test4', function(){
+    $user = User::find(21);
+    $user->status = 1;
+    $user->save();
+    echo "hi";
+});
 
 
 
