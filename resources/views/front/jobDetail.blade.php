@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="jobs_right">
                                     <div class="apply_now">
-                                        @if (Auth::check() && (Auth::id()!=$job->user_id))
+                                        @if (Auth::check() && (Auth::id()!=$job->user_id) && (Auth::user()->role != 'admin'))
                                             <a class="heart_mark" onclick="saveJob({{ $job->id }})"> <i class="fa fa-heart-o"
                                             aria-hidden="true"></i></a>
                                         @endif
@@ -79,13 +79,13 @@
                             <div class="border-bottom"></div>
                             <div class="pt-3 text-end">
 
-                                @if (Auth::check() && (Auth::id()!=$job->user_id))
+                                @if (Auth::check() && (Auth::id()!=$job->user_id) && (Auth::user()->role!='admin'))
                                     <a onclick="saveJob({{  $job->id }})" class="btn btn-secondary" id="sv-btn">Save</a>
                                 @elseif(!Auth::check())
                                     <a class="btn btn-secondary disabled">Login to Save</a>
                                 @endif
 
-                                @if (Auth::check() && (Auth::id()!=$job->user_id))
+                                @if (Auth::check() && (Auth::id()!=$job->user_id) &&(Auth::user()->role!='admin'))
                                     <a onclick="applyJob({{ $job->id }})" class="btn btn-primary"
                                         id="apply-btn">Apply</a>
                                 @elseif(!Auth::check())

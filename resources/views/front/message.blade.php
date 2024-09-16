@@ -144,6 +144,18 @@
     </div>
 @endif
 
+@if (session()->has('jobFeatured'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobFeatured') }}
+    </div>
+@endif
+
+@if (session()->has('jobUnFeatured'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobUnFeatured') }}
+    </div>
+@endif
+
 
 
 

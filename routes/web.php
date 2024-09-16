@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\JobController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobsController;
@@ -169,8 +170,14 @@ Route::prefix('admin')->group(function(){
         //enable, disable user
         Route::put('/update-user-status',[UserController::class, 'userStateManage'])->name('admin.updateUserStatus');
 
-        //
+        //delete the user
         Route::post('/delete-user', [UserController::class, 'deleteUser']) ->name('admin.deleteUser');
+
+        //list all jobs
+        Route::get('/jobs', [JobController::class, 'index']) -> name('admin.jobs');
+
+        //
+        Route::put('/jobs/feature', [JobController::class, 'jobFeatureManage']) -> name('admin.jobFeatureManage');
     });
 });
 

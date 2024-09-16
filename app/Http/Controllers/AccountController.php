@@ -102,7 +102,7 @@ class AccountController extends Controller
                 session() -> flash('loginerror', 'Invalid email or password');
                 return redirect() 
                     -> route('account.login') 
-                    -> withInput($request->only('email')); //with input for old('email'
+                    -> withInput($request->only('email')); //with input for old('email')
             }
         //for validation error redirect
         }else{

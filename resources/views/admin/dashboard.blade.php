@@ -28,13 +28,70 @@
                         <p style="font-weight: 400 !important;" id="admin_title">Welcome Admin</p>
                         <div class="border-bottom mb-3 mt-3"></div>
                         {{-- <p>hi</p> --}}
-                        <div class="row justify-content-center dash_item gy-3 text-center">
+                        {{-- <div class="row justify-content-center dash_item gy-3 text-center">
                             <div class="col-10 col-md-5 me-2">Users: {{ App\Models\User::count() }}</div>
                             <div class="col-10 col-md-5">Jobs: {{ App\Models\Job::count() }}</div>
                             <div class="col-10  col-md-5 me-2">Job Applications: {{ App\Models\JobApplication::count() }}</div>
                             <div class="col-10 col-md-5">Job Types: {{ App\Models\JobType::count() }}</div>
                             <div class="col-10 col-md-5">Categories: {{ App\Models\Category::count() }}</div>
+                        </div> --}}
+                        <div class="container my-4">
+                            <div class="row justify-content-center gy-3 text-center">
+                                <!-- Users Card -->
+                                <div class="col-10 col-md-5 col-lg-3">
+                                    <div class="card shadow-sm border-primary">
+                                        <div class="card-body">
+                                            <h7 class="card-title"><i class="bi bi-person"></i> Users</h7>
+                                            <p class="card-text display-4">{{ App\Models\User::count() }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <!-- Jobs Card -->
+                                <div class="col-10 col-md-5 col-lg-3">
+                                    <div class="card shadow-sm border-success">
+                                        <div class="card-body">
+                                            <h7 class="card-title"><i class="bi bi-briefcase"></i> Jobs</h7>
+                                            <p class="card-text display-4">{{ App\Models\Job::count() }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                               
+                        
+                                <!-- Job Types Card -->
+                                <div class="col-10 col-md-5 col-lg-3">
+                                    <div class="card shadow-sm border-info">
+                                        <div class="card-body">
+                                            <h7 class="card-title"><i class="bi bi-tags"></i> Job Types</h7>
+                                            <p class="card-text display-4">{{ App\Models\JobType::count() }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <!-- Categories Card -->
+                                <div class="col-10 col-md-5 col-lg-3">
+                                    <div class="card shadow-sm border-secondary">
+                                        <div class="card-body">
+                                            <h7 class="card-title"><i class="bi bi-folder"></i> Categories</h7>
+                                            <p class="card-text display-4">{{ App\Models\Category::count() }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <!-- Job Applications Card -->
+                                 <div class="col-10 col-md-5 col-lg-3">
+                                    <div class="card shadow-sm border-warning">
+                                        <div class="card-body">
+                                            <h7 class="card-title"><i class="bi bi-file-earmark-text"></i> Job Applications</h7>
+                                            <p class="card-text display-4">{{ App\Models\JobApplication::count() }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
+                        
                    </div>
                 </div>                          
             </div>
