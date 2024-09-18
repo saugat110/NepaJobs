@@ -4,11 +4,11 @@
 
     {{-- hero section  --}}
     <section class="section-0 lazy d-flex bg-image-style dark align-items-center " class=""
-        data-bg="{{ asset('assets/images/banner5.jpg') }}">
+        data-bg="{{ asset('assets/images/banner7.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-xl-8">
-                    <h1>Find your dream job</h1>
+                    <h1>Land your dream career</h1>
                     <p>Your best job partner.</p>
                     <div class="banner-btn mt-5"><a href="#" class="btn btn-primary mb-4 mb-sm-0">Explore Now</a></div>
                 </div>
@@ -64,8 +64,8 @@
             <div class="row pt-5">
                 @if ($categories->isNotEmpty())
                     @foreach ($categories as $category)
-                        <div class="col-lg-4 col-xl-3 col-md-6">
-                            <div class="single_catagory">
+                        <div class="col-lg-4 col-xl-3 col-md-6 text-center">
+                            <div class="single_catagory rounded-pill">
                                 <a href="{{ route('jobs') }}?category={{ $category->id }}">
                                     <h4 class="pb-2">{{ $category->name }}</h4>
                                 </a>
@@ -90,11 +90,11 @@
                             @if ($featuredjobs->isNotEmpty())
                                 @foreach ($featuredjobs as $fjob)
                                     <div class="col-md-4">
-                                        <div class="card border-0 p-3 shadow mb-4">
+                                        <div class="card border-0 p-3 shadow mb-4 rounded-lg">
                                             <div class="card-body">
                                                 <h3 class="border-0 fs-5 pb-2 mb-0">{{ $fjob->title }}</h3>
                                                 <p>{{ Str::words($fjob->description, 5) }}</p>
-                                                <div class="bg-light p-3 border">
+                                                <div class="bg-light p-3 border rounded">
                                                     <p class="mb-0">
                                                         <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
                                                         <span class="ps-1">{{ $fjob->location }}</span>
@@ -117,9 +117,9 @@
 
                                                 </div>
 
-                                                <div class="d-grid mt-3">
+                                                <div class="mt-3">
                                                     <a href="{{ route('jobDetail', ['jobid' => $fjob->id]) }}"
-                                                        class="btn btn-primary btn-lg">Details</a>
+                                                        class="btn btn-primary btn-lg">View Details</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,7 +150,7 @@
                                             <div class="card-body">
                                                 <h3 class="border-0 fs-5 pb-2 mb-0">{{ $ljob->title }}</h3>
                                                 <p>{{ Str::words($ljob->description, 5) }}</p>
-                                                <div class="bg-light p-3 border">
+                                                <div class="bg-light p-3 border rounded">
                                                     <p class="mb-0">
                                                         <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
                                                         <span class="ps-1">{{ $ljob->location }}</span>
@@ -173,9 +173,9 @@
 
                                                 </div>
 
-                                                <div class="d-grid mt-3">
+                                                <div class=" mt-3">
                                                     <a href="{{ route('jobDetail', ['jobid' => $ljob->id]) }}"
-                                                        class="btn btn-primary btn-lg">Details</a>
+                                                        class="btn btn-primary btn-lg">View Details</a>
                                                 </div>
                                             </div>
                                         </div>

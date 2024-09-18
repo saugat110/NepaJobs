@@ -95,7 +95,7 @@
                                                 <div class="card-body">
                                                     <h3 class="border-0 fs-5 pb-2 mb-0">{{ $job->title }}</h3>
                                                     <p>{{ Str::limit($job->description, 40) }}</p>
-                                                    <div class="bg-light p-3 border">
+                                                    <div class="bg-light p-3 border rounded">
                                                         <p class="mb-0">
                                                             <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
                                                             <span class="ps-1">{{ $job->location }}</span>
@@ -117,8 +117,8 @@
                                                         @endif
                                                     </div>
 
-                                                    <div class="d-grid mt-3">
-                                                        <a href="{{ route('jobDetail', ['jobid' => $job->id]) }}" class="btn btn-primary btn-lg">Details</a>
+                                                    <div class="mt-3">
+                                                        <a href="{{ route('jobDetail', ['jobid' => $job->id]) }}" class="btn btn-primary btn-lg">View Details</a>
                                                     </div>
                                                 </div>
                                             </div>

@@ -156,6 +156,24 @@
     </div>
 @endif
 
+@if (session()->has('resetEmail'))
+    <div class="alert alert-success" role="alert">
+        {{ session('resetEmail') }}
+    </div>
+@endif
+
+@if (session()->has('tokenMismatch'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('tokenMismatch') }}
+    </div>
+@endif
+
+@if (session()->has('resetSuccess'))
+    <div class="alert alert-success" role="alert">
+        {{ session('resetSuccess') }}
+    </div>
+@endif
+
 
 
 

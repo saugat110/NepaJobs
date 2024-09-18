@@ -46,6 +46,18 @@ Route::get('/jobs/detail/{jobid}', [JobsController::class, 'jobDetail']) -> name
 //apply job
 Route::post('job/apply', [JobsController::class, 'applyJob']) -> name('jobApply');
 
+//forgot password form
+Route::get('/forgotPassword', [AccountController::class, 'forgotPassword'])->name('forgotPassword');
+
+//process forgotPassword
+Route::post('/processForgotPassword', [AccountController::class, 'processForgotPassword']) ->name('processForgotPassword');
+
+//reset password form link, form will only open when token is verified
+Route::get('/reset-password/{token}/{email}', [AccountController::class, 'resetPassword']) ->name('resetPassword');
+
+//process resetPassword
+Route::post('/process-reset-password', [AccountController::class, 'processResetPassword']) ->name('processResetPassword');
+
 // Route::get('/routes', function () {
 //     //returns registration page
 //     // Route::get('/account/register', [AccountController::class, 'registration']) -> name('account.registration');
