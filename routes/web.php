@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\JobController;
+use App\Http\Controllers\admin\JobtypeController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobsController;
@@ -176,6 +178,8 @@ Route::prefix('admin')->group(function(){
         //returns admin dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.Dashboard');
 
+
+
         //get all users
         Route::get('/users', [UserController::class, 'index'])->name('admin.users.list');
 
@@ -185,11 +189,49 @@ Route::prefix('admin')->group(function(){
         //delete the user
         Route::post('/delete-user', [UserController::class, 'deleteUser']) ->name('admin.deleteUser');
 
+
+
         //list all jobs
         Route::get('/jobs', [JobController::class, 'index']) -> name('admin.jobs');
 
-        //
+        //feature , unfeature job
         Route::put('/jobs/feature', [JobController::class, 'jobFeatureManage']) -> name('admin.jobFeatureManage');
+
+        //job status manage
+        Route::put('/job/status', [JobController::class, 'jobStatus']) -> name('admin.jobStatus');
+
+        //delete job
+        Route::delete('/job/delete', [JobController::class, 'deleteJob']) ->name('admin.deleteJob');
+
+
+        //list categories
+        Route::get('/categories', [CategoryController::class, 'index']) -> name('admin.categories');
+
+        //add category
+        Route::post('/add/category', [CategoryController::class, 'addCategory']) ->name('admin.addCategory');
+
+        //category status manage
+        Route::post('/category/status', [CategoryController::class, 'categoryStatus'])->name('admin.categoryStatus');
+
+        //delete category
+        Route::delete('/category/delete', [CategoryController::class, 'deleteCategory']) ->name('admin.deleteCategory');
+
+
+
+         //list jobtypes
+         Route::get('/jobtypes', [JobtypeController::class, 'index']) -> name('admin.jobTypes');
+
+         //add jobtype
+         Route::post('/add/jobtype', [JobtypeController::class, 'addjobType']) ->name('admin.addjobType');
+ 
+         //jobtype status manage
+         Route::post('/jobtype/status', [JobtypeController::class, 'jobTypeStatus'])->name('admin.jobTypeStatus');
+ 
+         //delete jobtype
+         Route::delete('/jobtype/delete', [JobtypeController::class, 'deletejobType']) ->name('admin.deletejobType');
+
+         //view user profile
+         Route::get('/userprofile/{id}', [UserController::class, 'viewProfile']) -> name('admin.viewUserProfile');
     });
 });
 

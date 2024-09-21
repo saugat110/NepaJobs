@@ -174,6 +174,54 @@
     </div>
 @endif
 
+@if (session()->has('categoryAdded'))
+    <div class="alert alert-success" role="alert">
+        {{ session('categoryAdded') }}
+    </div>
+@endif
+
+@if (session()->has('categoryStatus'))
+    <div class="alert alert-success" role="alert">
+        {{ session('categoryStatus') }}
+    </div>
+@endif
+
+@if (session()->has('categoryDeleted'))
+    <div class="alert alert-success" role="alert">
+        {{ session('categoryDeleted') }}
+    </div>
+@endif
+
+@if (session()->has('jobtypeAdded'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobtypeAdded') }}
+    </div>
+@endif
+
+@if (session()->has('jobtypeStatus'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobtypeStatus') }}
+    </div>
+@endif
+
+@if (session()->has('jobtypeDeleted'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobtypeDeleted') }}
+    </div>
+@endif
+
+@if (session()->has('jobStatus'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobStatus') }}
+    </div>
+@endif
+
+@if (session()->has('jobDeleted'))
+    <div class="alert alert-success" role="alert">
+        {{ session('jobDeleted') }}
+    </div>
+@endif
+
 
 
 

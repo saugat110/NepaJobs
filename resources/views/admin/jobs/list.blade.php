@@ -52,7 +52,7 @@
                                             @foreach ($jobs as $job)
                                                 <tr class="active">
                                                     <td>{{ $job->id }}</td>
-                                                    <td>{{ $job->title }}</td>
+                                                    <td><a href="{{ route('jobDetail',['jobid'=> $job->id]) }}">{{ $job->title }}</a></td>
                                                     <td>{{ $job->user->name }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($job->created_at)->format('d M, Y') }}
                                                     </td>
@@ -89,6 +89,25 @@
                                                                             class="fa fa-edit" aria-hidden="true"></i>
                                                                         UnFeature</a></li>
                                                                 @endif
+
+                                                                @if($job->status == 0)
+                                                                <li><a class="dropdown-item"
+                                                                        onclick="jobStateManage({{ $job->id }}, 'enable')"><i
+                                                                            class="fa fa-eye" aria-hidden="true"></i>
+                                                                        Enable</a></li>
+                                                                @endif
+
+                                                                @if($job->status == 1)
+                                                                <li><a class="dropdown-item"
+                                                                        onclick="jobStateManage({{ $job->id }}, 'disable')"><i
+                                                                            class="fa fa-eye" aria-hidden="true"></i>
+                                                                        Disable</a></li>
+                                                                @endif
+
+                                                                <li><a class="dropdown-item"
+                                                                    onclick="deleteJob({{ $job->id }})"><i
+                                                                        class="fa fa-trash-o" aria-hidden="true"></i>
+                                                                    Delete</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -184,6 +203,44 @@
             //         }
             //     }
             // });
+        }
+
+        function jobStateManage(id, status){
+            $.ajax({
+                url: "{{ route('admin.jobStatus') }}",
+                method: 'put',
+                data: {jobid:id, status:status},
+                dataType: 'json',
+                success: function(response){
+                    if(response.status){
+                        if(urlParams.has('page')){
+                            window.location.href = "{{ url() -> current() }}?page={{ Request::get('page') }}";
+                        }else{
+                            window.location.href = "{{ url() -> current() }}";
+                        }
+                    }else{
+                        console.log(response.error);
+                    }
+                }
+            });
+        }
+
+        function deleteJob(id){
+            $.ajax({
+                url: "{{ route('admin.deleteJob') }}",
+                method: 'delete',
+                data: {id: id},
+                dataType: 'json',
+                success: function(response){
+                    if(response.status){
+                        if(urlParams.has('page')){
+                            window.location.href = "{{ url() -> current() }}?page={{ Request::get('page') }}";
+                        }else{
+                            window.location.href = "{{ url() -> current() }}"
+                        }
+                    }
+                }
+            });
         }
     </script>
 @endsection

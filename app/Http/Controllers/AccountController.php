@@ -34,7 +34,7 @@ class AccountController extends Controller
     public function processRegistration(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|alpha',
+            'name' => 'required|string|max:20|regex:/^[a-zA-Z\s]+$/',            
             'email' => 'required|unique:users,email',
             'password' => 'required|min:5',
             'confirm_password' => 'required|same:password'
@@ -135,7 +135,7 @@ class AccountController extends Controller
     {
         $id = Auth::id();
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:20',
+            'name' => 'required|string|max:20|regex:/^[a-zA-Z\s]+$/',            
             'email' =>  'required|email|unique:users,email,' . $id . 'id',
             'designation' => ['nullable', 'string', 'regex:/^[a-zA-Z\s]+$/', 'max:20'],
             'mobile' => 'nullable|numeric|digits:10'

@@ -118,7 +118,7 @@
                                                     </div>
 
                                                     <div class="mt-3">
-                                                        <a href="{{ route('jobDetail', ['jobid' => $job->id]) }}" class="btn btn-primary btn-lg">View Details</a>
+                                                        <a href="{{ route('jobDetail', ['jobid' => $job->id]) }}" class="btn btn-primary btn-sm">View Details</a>
                                                     </div>
                                                 </div>
                                             </div>

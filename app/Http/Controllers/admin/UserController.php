@@ -11,11 +11,11 @@ class UserController extends Controller
 {
     //return all users except the admin
     public function index(){
-        $users = User::where("id", "!=", Auth::id()) -> orderBy('created_at', 'desc')->paginate(3);
+        $users = User::where("role", "!=", 'admin') -> orderBy('created_at', 'desc')->paginate(3);
         return view('admin.user.list',['users'=>$users]);
     }
 
-    //
+    //user state manage, enable, disable
     public function userStateManage(Request $request){
         if($request->status == 'active'){
             $user = User::find($request->userid);
@@ -44,7 +44,7 @@ class UserController extends Controller
         }
     }
 
-    //
+    //delete a user
     public function deleteUser(Request $request){
         if(Auth::user() -> role == 'admin'){
             $user = User::find($request->userid);
@@ -60,5 +60,9 @@ class UserController extends Controller
         }
     }
 
-
+    //view user profile
+    public function viewProfile($id){
+        $user = User::find($id);
+        return view ('admin.userprofile') -> with(['user' => $user]);
+    }
 }

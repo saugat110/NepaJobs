@@ -52,7 +52,7 @@
                                             @foreach ($users as $user)
                                                 <tr class="active">
                                                     <td>{{ $user->id }}</td>
-                                                    <td>{{ $user->name }}</td>
+                                                    <td><a href="{{ route('admin.viewUserProfile',['id'=>$user->id]) }}">{{ $user->name }}</td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>
                                                         @if ($user->mobile!=null && $user->mobile!='')

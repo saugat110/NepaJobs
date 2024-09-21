@@ -69,7 +69,7 @@
                                 <a href="{{ route('jobs') }}?category={{ $category->id }}">
                                     <h4 class="pb-2">{{ $category->name }}</h4>
                                 </a>
-                                <p class="mb-0"> <span>{{ $category->jobs->where('status','!=', 0)->count() }}</span> Available positions</p>
+                                <p class="mb-0"> <span>{{ $category->total_positions}}</span> Available positions</p>
                             </div>
                         </div>
                     @endforeach
@@ -119,7 +119,7 @@
 
                                                 <div class="mt-3">
                                                     <a href="{{ route('jobDetail', ['jobid' => $fjob->id]) }}"
-                                                        class="btn btn-primary btn-lg">View Details</a>
+                                                        class="btn btn-primary btn-sm">View Details</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -175,7 +175,7 @@
 
                                                 <div class=" mt-3">
                                                     <a href="{{ route('jobDetail', ['jobid' => $ljob->id]) }}"
-                                                        class="btn btn-primary btn-lg">View Details</a>
+                                                        class="btn btn-primary btn-sm">View Details</a>
                                                 </div>
                                             </div>
                                         </div>
