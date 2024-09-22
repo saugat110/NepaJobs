@@ -193,7 +193,7 @@
             updateButton.disabled = true;
 
             $.ajax({
-                url: '{{ route('account.processEditJob',['job_id' => $job->id]) }}',
+                url: '{{ route('account.processEditJob',['job_id' => $job->id, 'page'=> Request::get('page')??1]) }}',
                 type: 'put',
                 dataType: 'json',
                 data: $('#updateJobForm').serializeArray(),
@@ -234,7 +234,7 @@
                             .siblings('p')
                             .removeClass('invalid-feedback')
                             .html('');
-                        window.location.href = "{{ route('account.myJobs') }}";
+                        window.location.href = "{{ route('account.myJobs') }}?page="+response.page;
 
                         //some error in form
                     } else {

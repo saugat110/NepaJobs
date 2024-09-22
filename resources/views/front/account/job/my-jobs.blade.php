@@ -80,7 +80,7 @@
                                                                 <li><a class="dropdown-item" href="{{ route('jobDetail',['jobid'=>$myjob->id]) }}"> <i
                                                                             class="fa fa-eye" aria-hidden="true"></i>
                                                                         View</a></li>
-                                                                <li><a class="dropdown-item" href="{{ route('account.editJob', ['job_id' => $myjob->id]) }}"><i
+                                                                <li><a class="dropdown-item" href="{{ route('account.editJob', ['job_id' => $myjob->id,'page' => Request::get('page') ]) }}"><i
                                                                             class="fa fa-edit" aria-hidden="true"></i>
                                                                         Edit</a></li>
                                                                 <li><a class="dropdown-item" onclick="deleteJob( {{ $myjob -> id }} )"><i

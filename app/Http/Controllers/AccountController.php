@@ -20,6 +20,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Intervention\Image\Colors\Rgb\Channels\Red;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class AccountController extends Controller
@@ -384,6 +385,7 @@ class AccountController extends Controller
             return response()
                 ->json([
                     'status' => true,
+                    'page' => $request -> input('page') ?? 1,
                     'errors' => []
                 ]);
         } else {
@@ -553,6 +555,22 @@ class AccountController extends Controller
         } else {
             return redirect()->route('resetPassword', ['token' => $request->token, 'email' => $request->email])->withErrors($validator);
         }
+    }
+
+    //payment success
+    public function paymentSuccess(){
+        $user = User::find(Auth::id());
+        if($user){
+            $user -> payment = 'paid';
+            $user -> save();
+        }
+        session() -> flash('paymentSuccess', 'Payment Succesfull, Now you can post jobs.');
+        return redirect() -> route('account.createJob');
+    }
+
+    //payment failure
+    public function paymentFailure(){
+        return redirect() -> route('home');
     }
 
     //logout user and redirect to login page

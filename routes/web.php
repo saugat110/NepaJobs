@@ -118,8 +118,8 @@ Route::prefix('/account')->group(function () {
         //update password
         Route::put('/updatePassword', [AccountController::class, 'changePassword']) -> name('account.changePassword');
 
-        //return create job page
-        Route::get('/create-job', [AccountController::class, 'createJobs']) -> name('account.createJob');
+        // //return create job page
+        // Route::get('/create-job', [AccountController::class, 'createJobs']) -> name('account.createJob');
 
         //process form of create-job page
         Route::post('/process-createJob', [AccountController::class, 'processCreateJobs']) -> name('account.processCreateJob');
@@ -163,11 +163,28 @@ Route::prefix('/account')->group(function () {
         //delete rejected job applications
         Route::post('job/remove-rejected/',[JobsController::class, 'removeRejectedApplications']) -> name('account.removeRejectedApplications');
 
+        //payment success
+        Route::get('/paymentsuccess', [AccountController::class, 'paymentSuccess'])->name('payment.Success');
+
+        //payment failure
+        Route::get('/paymentfailure', [AccountController::class, 'paymentFailure']) -> name('payment.Failure');
+
         //logout user and redirect to login page
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     });
 
 });
+
+
+//payment route
+Route::prefix('/account') ->group(function(){
+    // payment only route
+    Route::middleware('auth', 'checkPayment')->group(function(){
+        //return create job page
+        Route::get('/create-job', [AccountController::class, 'createJobs']) -> name('account.createJob');
+    });
+});
+    
 
 
 //admin routes

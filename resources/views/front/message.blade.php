@@ -222,6 +222,18 @@
     </div>
 @endif
 
+@if (session()->has('paymentSuccess'))
+    <div class="alert alert-success" role="alert">
+        {{ session('paymentSuccess') }}
+    </div>
+@endif
+
+@if (session()->has('notpaid'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('notpaid') }}
+    </div>
+@endif
+
 
 
 
