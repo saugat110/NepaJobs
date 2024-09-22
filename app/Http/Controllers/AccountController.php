@@ -139,7 +139,9 @@ class AccountController extends Controller
             'name' => 'required|string|max:20|regex:/^[a-zA-Z\s]+$/',            
             'email' =>  'required|email|unique:users,email,' . $id . 'id',
             'designation' => ['nullable', 'string', 'regex:/^[a-zA-Z\s]+$/', 'max:20'],
-            'mobile' => 'nullable|numeric|digits:10'
+            'mobile' => 'nullable|numeric|digits:10',
+            'skills' => ['nullable', 'regex:/^(?!\d+$)[a-zA-Z0-9\s,]+$/', 'min:10'],
+            'experience' => ['nullable', 'regex:/^(?!\d+$)[a-zA-Z0-9\s,]+$/', 'min:10']
         ]);
 
         if ($validator->passes()) {
@@ -148,6 +150,8 @@ class AccountController extends Controller
             $user->email = $request->email;
             $user->designation = $request->designation;
             $user->mobile = $request->mobile;
+            $user->skill = $request -> skills;
+            $user->experiecne = $request -> experience;
             $user->save();
 
             session()->flash('updatedProfile', 'Profile Updated Successfully');
@@ -503,7 +507,7 @@ class AccountController extends Controller
                 'token' => $token,
                 'user' => $user
             ];
-            Mail::to($request->email)->send(new ResetPasswordEmail($mailData));
+            Mail::to($request->email)->queue(new ResetPasswordEmail($mailData));
             return redirect()->route('forgotPassword')->with("resetEmail", "Please check your email");
         } else {
             return redirect()

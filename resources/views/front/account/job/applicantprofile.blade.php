@@ -44,25 +44,32 @@
                     <div class="descript_wrap white-bg px-3 mt-2">
                         <div class="border-bottom mb-3"></div>
                         <div class="ps-4">
-                            <p> Name:<span class="ps-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $applicant->name }}</span></p>
-                            <p>Email:<span class="ps-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $applicant->email }}</span></p>
+                            <p> Name:<span class="ps-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $applicant->name }}</span></p>
+                            <p>Email:<span class="ps-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $applicant->email }}</span></p>
 
                             @if ($applicant -> mobile !=null && $applicant->mobile!='')
-                                <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">{{ $applicant->mobile }}</span></p>
+                                <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">{{ $applicant->mobile }}</span></p>
                             @else
-                                <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">---------------------</span></p>
+                                <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">---------------------</span></p>
                             @endif
 
                             @if ($applicant -> designation !=null && $applicant->designation!='')
-                                <p>Designation:&nbsp;&nbsp;{{ $applicant -> designation }}</p>
+                                <p>Designation:&nbsp;&nbsp;&nbsp;{{ $applicant -> designation }}</p>
                             @else
-                                <p>Designation:&nbsp;&nbsp;---------------------</p>
+                                <p>Designation:&nbsp;&nbsp;&nbsp;---------------------</p>
                             @endif
 
-                            {{-- forskills --}}
-                            <div>
-                                <p>Skills:</p>
-                            </div>
+                            @if ($applicant -> skill !=null && $applicant->skill!='')
+                                <p>Skills:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $applicant -> skill }}</p>
+                            @else
+                                <p>Skills:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---------------------</p>
+                            @endif
+
+                            @if ($applicant -> experiecne !=null && $applicant->experiecne!='')
+                                <p>Experience:&nbsp;&nbsp;&nbsp;&nbsp;{{ $applicant -> experiecne }}</p>
+                            @else
+                                <p>Experience:&nbsp;&nbsp;&nbsp;&nbsp;---------------------</p>
+                            @endif
 
                             @if (! App\Models\JobApplication::where(['job_id'=>$jID, 'user_id'=>$applicant->id, 'application_status'=>1])->exists())
                                 <button onclick="accept({{ $jID }}, {{ $applicant->id }})" id="accept_btn">Accept</button>

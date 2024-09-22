@@ -26,7 +26,7 @@
                 {{-- update personal info --}}
                 <div class="col-lg-9">
                     {{-- for sucess error alert messages --}}
-                        @include('front.message')
+                    @include('front.message')
                     <div class="card border-0 shadow mb-4">
                         <form action="" id="updateProfileForm" name="updateProfileForm">
                             <div class="card-body  p-4">
@@ -55,6 +55,17 @@
                                         class="form-control" value="{{ $user->mobile }}">
                                     <p></p>
                                 </div>
+                                <div class="mb-4">
+                                    <label for="" class="mb-2">Skills</label>
+                                    <textarea class="form-control" name="skills" id="skills" cols="5" rows="5" placeholder="Skills">{{ $user->skill }}</textarea>
+                                    <p></p>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="" class="mb-2">Experience</label>
+                                    <textarea class="form-control" name="experience" id="experience" cols="5" rows="5"
+                                        value="{{ $user->experiecne }}" placeholder="Experience">{{ $user->experiecne }}</textarea>
+                                    <p></p>
+                                </div>
                             </div>
                             <div class="card-footer  p-4">
                                 <button type="submit" class="btn btn-primary" id="upt_pro_btn">Update</button>
@@ -70,17 +81,20 @@
                                 <h3 class="fs-4 mb-1">Change Password</h3>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Old Password*</label>
-                                    <input type="password"  id="old_password" name="old_password" placeholder="Old Password" class="form-control">
+                                    <input type="password" id="old_password" name="old_password" placeholder="Old Password"
+                                        class="form-control">
                                     <p></p>
                                 </div>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">New Password*</label>
-                                    <input type="password" id="new_password" name="new_password" placeholder="New Password" class="form-control">
+                                    <input type="password" id="new_password" name="new_password" placeholder="New Password"
+                                        class="form-control">
                                     <p></p>
                                 </div>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Confirm Password*</label>
-                                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" class="form-control">
+                                    <input type="password" id="confirm_password" name="confirm_password"
+                                        placeholder="Confirm Password" class="form-control">
                                     <p></p>
                                 </div>
                             </div>
@@ -105,7 +119,8 @@
         $('#updateProfileForm').submit(function(e) {
             e.preventDefault();
             var updateProButton = document.getElementById('upt_pro_btn');
-            updateProButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...`;
+            updateProButton.innerHTML =
+                `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...`;
             updateProButton.disabled = true;
 
             $.ajax({
@@ -131,10 +146,18 @@
                             .siblings('p')
                             .removeClass('invalid-feedback')
                             .html('');
+                        $('#skills').removeClass('is-invalid')
+                            .siblings('p')
+                            .removeClass('invalid-feedback')
+                            .html('');
+                        $('#experience').removeClass('is-invalid')
+                            .siblings('p')
+                            .removeClass('invalid-feedback')
+                            .html('');
                         window.location.href = "{{ route('account.profile') }}";
 
                         //some error in form
-                    }else {
+                    } else {
                         updateProButton.disabled = false;
                         updateProButton.innerHTML = 'Update';
                         var errors = response.errors;
@@ -186,26 +209,49 @@
                                 .removeClass('invalid-feedback')
                                 .html('');
                         }
+                        if (errors.skills) {
+                            $('#skills').addClass('is-invalid')
+                                .siblings('p')
+                                .addClass('invalid-feedback')
+                                .html(errors.skills);
+                        } else {
+                            $('#skills').removeClass('is-invalid')
+                                .siblings('p')
+                                .removeClass('invalid-feedback')
+                                .html('');
+                        }
+                        if (errors.experience) {
+                            $('#experience').addClass('is-invalid')
+                                .siblings('p')
+                                .addClass('invalid-feedback')
+                                .html(errors.experience);
+                        } else {
+                            $('#experience').removeClass('is-invalid')
+                                .siblings('p')
+                                .removeClass('invalid-feedback')
+                                .html('');
+                        }
                     }
                 }
             });
         });
 
         //update password
-        $('#changePasswordForm').submit(function(e){
+        $('#changePasswordForm').submit(function(e) {
             e.preventDefault();
             var updatePwdButton = document.getElementById('upt_pwd_btn');
-            updatePwdButton.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...`;
+            updatePwdButton.innerHTML =
+                `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...`;
             updatePwdButton.disabled = true;
             $.ajax({
                 url: '{{ route('account.changePassword') }}',
                 method: 'PUT',
                 dataType: 'json',
-                data:$('#changePasswordForm').serializeArray(),
-                success:function(response){
+                data: $('#changePasswordForm').serializeArray(),
+                success: function(response) {
                     // console.log(response.errors)
 
-                    if(response.status == false){
+                    if (response.status == false) {
                         updatePwdButton.disabled = false;
                         updatePwdButton.innerHTML = 'Update';
 
@@ -243,13 +289,11 @@
                                 .removeClass('invalid-feedback')
                                 .html('');
                         }
-                    }else{
-                        window.location.href = "{{ url() -> current() }}";
+                    } else {
+                        window.location.href = "{{ url()->current() }}";
                     }
                 }
             });
         });
-
-
     </script>
 @endsection

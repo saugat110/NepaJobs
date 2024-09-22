@@ -44,25 +44,32 @@
                     <div class="descript_wrap white-bg px-3 mt-2">
                         <div class="border-bottom mb-3"></div>
                         <div class="ps-4">
-                            <p> Name:<span class="ps-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $user->name }}</span></p>
-                            <p>Email:<span class="ps-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $user->email }}</span></p>
+                            <p> Name:<span class="ps-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $user->name }}</span></p>
+                            <p>Email:<span class="ps-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $user->email }}</span></p>
 
                             @if ($user -> mobile !=null && $user->mobile!='')
-                                <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">{{ $user->mobile }}</span></p>
+                                <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">{{ $user->mobile }}</span></p>
                             @else
-                                <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">---------------------</span></p>
+                                <p>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ps-3">---------------------</span></p>
                             @endif
 
                             @if ($user -> designation !=null && $user->designation!='')
-                                <p>Designation:&nbsp;&nbsp;{{ $user -> designation }}</p>
+                                <p>Designation:&nbsp;&nbsp;&nbsp;{{ $user -> designation }}</p>
                             @else
-                                <p>Designation:&nbsp;&nbsp;---------------------</p>
+                                <p>Designation:&nbsp;&nbsp;&nbsp;---------------------</p>
                             @endif
 
-                            {{-- forskills --}}
-                            <div>
-                                <p>Skills:</p>
-                            </div>
+                            @if ($user -> skill !=null && $user->skill!='')
+                                <p>Skills:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $applicant -> skill }}</p>
+                            @else
+                                <p>Skills:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---------------------</p>
+                            @endif
+
+                            @if ($user -> experiecne !=null && $user->experiecne!='')
+                                <p>Experience:&nbsp;&nbsp;&nbsp;&nbsp;{{ $user -> experiecne }}</p>
+                            @else
+                                <p>Experience:&nbsp;&nbsp;&nbsp;&nbsp;---------------------</p>
+                            @endif
 
             
                         </div>

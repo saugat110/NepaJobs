@@ -10,7 +10,7 @@
                 <div class="col-12 col-xl-8">
                     <h1>Land your dream career</h1>
                     <p>Your best job partner.</p>
-                    <div class="banner-btn mt-5"><a href="#" class="btn btn-primary mb-4 mb-sm-0">Explore Now</a></div>
+                    <div class="banner-btn mt-5"><a href="{{ route('jobs') }}" class="btn btn-primary mb-4 mb-sm-0">Explore Now</a></div>
                 </div>
             </div>
         </div>

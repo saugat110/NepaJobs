@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApplicationStatusEmail;
 use App\Mail\JobNotificationEmail;
 use App\Models\Category;
 use App\Models\Job;
@@ -255,7 +256,7 @@ class JobsController extends Controller
         ];
 
         try {
-            Mail::to($employer->email)->send(new JobNotificationEmail($mailData));
+            Mail::to($employer->email)->queue(new JobNotificationEmail($mailData));
         } catch (Exception $e) {
         }
         session()->flash('applyjobsuccess', "Applied for Job Successfully.");
@@ -337,6 +338,9 @@ class JobsController extends Controller
 
                 $jobapplication->job->decrement('vacancy', 1);
                 session()->flash('jobaccepted', "Job Accepted");
+
+                Mail::to($jobapplication->user->email) -> queue(new ApplicationStatusEmail($jobapplication->user->name, $jobapplication->job->title, 'Accepted'));
+
                 return response()->json(['status' => 'accepted']);
             }
             if ($request->status == -1) {
@@ -350,6 +354,8 @@ class JobsController extends Controller
                 if ($request->fromprofile != null) {
                     session()->flash("jobrejected", "Application Rejected");
                 }
+                Mail::to($jobapplication->user->email) -> queue(new ApplicationStatusEmail($jobapplication->user->name, $jobapplication->job->title, 'Rejected'));
+
                 return response()->json(['status' => 'rejected']);
             }
         } else {
